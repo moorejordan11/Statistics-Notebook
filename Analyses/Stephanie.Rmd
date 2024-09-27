@@ -6,6 +6,8 @@ output:
     code_folding: hide
     toc: true
     toc_float: true
+execute:
+  md: true
 ---
 
 **Week 2 Analysis**
@@ -47,16 +49,54 @@ Write your response here... (delete this line).
 ```{r}
 # Code to get you started, be sure to use a subset of Rent instead of Rent in this code though.
 datatable(Rent, options=list(lengthMenu = c(3,10,30)), extensions="Responsive")
+# Filter for women's housing and rent close to $300
+women_housing <- Rent %>%
+  filter(Gender == "F")
+
+women_housing2 <- women_housing %>%
+  mutate(
+    AvgFloorPlanCostMonthly = AvgFloorPlanCost / 4)
+
+women_housing_main <- women_housing2 %>%
+  filter(AvgFloorPlanCostMonthly <= 300)
+
+# View(women_housing_main)
+
+women_housing3 <- women_housing_main %>%
+  filter(Residents > (median(women_housing_main$Residents)) &
+    CrowFlyMetersToMC <  median(women_housing_main$CrowFlyMetersToMC))
+
+View(women_housing3)
+
+
 ```
 
+```{r}
+ggplot(women_housing3, aes(x = reorder(Name, -AvgFloorPlanCostMonthly), y = AvgFloorPlanCostMonthly)) +
+  geom_col(fill = "steelblue", color = "black") +
+  labs(title = "Women's Housing and Monthly Rent",
+       x = "Housing Name",
+       y = "Average Monthly Rent ($)") +
+  theme_minimal()
 
+```
+```{r}
+ggplot(women_housing3, aes(x = reorder(Name, -Residents), y = Residents)) +
+  geom_col(fill = "steelblue", color = "black") +
+  labs(title = "Women's Housing and Residents",
+       x = "Housing Name",
+       y = "Total Residents") +
+  theme_minimal()
 
+```
+```{r}
+ggplot(women_housing3, aes(x = reorder(Name, -CrowFlyMetersToMC), y = CrowFlyMetersToMC)) +
+  geom_col(fill = "steelblue", color = "black") +
+  labs(title = "Women's Housing and Distance to MC",
+       x = "Housing Name",
+       y = "Distance to MC") +
+  theme_minimal()
 
-
-
-
-
-
-
+```
 
 [^1]: Note that Stephanie is a fictional character who is based on real experiences of many faculty and staff here at BYU-Idaho.

@@ -53,14 +53,14 @@ datatable(Rent, options=list(lengthMenu = c(3,10,30)), extensions="Responsive")
 ```{r}
 # Use this R-chunk to...
 # ...Create an interesting graphic using the Rent data set.
-
+hist(Rent$Residents, xlab="Number of Residents", main="BYU-Idaho Housing \n One-Semester Entry Level Resident Amounts", col=c("skyblue3","skyblue3","skyblue","skyblue","skyblue","skyblue","skyblue","skyblue"))
 
 ```
 
 
 <!-- Write a few statements here that explain your graphic and what it shows. -->
 
-...delete this and type here...
+This graphic shows a basic relationship between the number of residents and the amount of times it appears in the data set. We see that most housing communities are less than 200 per apartment likely due to coding types in Rexburg as larger buildings require stricter coding requirements which costs more to build so building companies opt to build the cheaper option.
 
 
 
@@ -68,18 +68,21 @@ datatable(Rent, options=list(lengthMenu = c(3,10,30)), extensions="Responsive")
 ```{r}
 # Use this R-chunk to...
 # ...compute and display a meaningful table of numerical summaries supporting your above graphic.
+outputTable <- rbind(Residents=favstats(Rent$Residents))
+pander(outputTable[c("min", "Q1", "median", "mean", "Q3", "max", "n")], 
+       caption="Resident Amount Summary")
 
 
 ```
 
 <!-- Write a few statements here that introduce your table of numerical summaries and what they show. -->
 
-...delete this and type here...
+We see that the minimum amount of students in a housing complex is 6 while our average is around 139. The max is 550 and is likely the larger complexes with either several buildings or the very expansive buildings near downtown Rexburg around Porter Park.
 
 
 ## Conclusion
 
-...delete this and type an interesting final conclusion about what your graphic and numerical summaries show...
+There are several factors effecting BYU-I student population and as we look at housing we see that companies are opting for smaller more managable size complexes due to a variety of factors from size of property to cost of going above a certain amount of stories.
 
 
 

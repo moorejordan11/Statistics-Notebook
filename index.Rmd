@@ -103,8 +103,24 @@ Add your own notes about graphics to use for this type of data here.
 <!-- Add your customizations in the area below: -->
 
 Add your own notes about appropriate inferential procedures for this type of data here.
+View(KidsFeet)
 
+Boxplot and Five-number Summary
+#Create a side-by-side boxplot where the y-axis shows the length of KidsFeet and the x-axis shows the gender of the child.
+boxplot(length ~sex, data=KidsFeet)
 
+#Create a five-number summary table in support of the boxplot.
+KidsFeet %>%
+  group_by(sex) %>%
+    summarise(min=min(length), Q1=quantile(length, 0.25), median=median(length), Q3=quantile(length, 0.75), max=max(length)) %>% 
+  pander()
+#Create a bar plot that shows how many boys and how many girls are in the KidsFeet data set.
+barplot(table(KidsFeet$sex), col=c("lightblue",'pink'))
+
+#Create a supporting table of counts for the bar plot.
+table(KidsFeet$sex)
+
+#End of KidsFeet assignment here_________
 
 
 
