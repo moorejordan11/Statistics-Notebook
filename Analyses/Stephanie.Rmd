@@ -16,6 +16,7 @@ execute:
 library(mosaic)
 library(tidyverse)
 library(pander)
+library(knitr)
 library(DT) # If you get an error stating: 
             # Error in library(DT): there is no package called 'DT'
             # You will need to run: install.packages("DT") 
@@ -27,29 +28,24 @@ Rent <- read_csv("../Data/Rent.csv")
 
 ## Background
 
-Stephanie[^1] is a student that will be starting school at BYU-Idaho next semester. Suppose she sent you the following email.
+------------------------------------------------------------------------
 
-----
+"Hi. My name is Stephanie. I would like to learn about what housing options I have for living at BYU-Idaho next semester. It will be my first semester there, so I would like to find something that is close to campus and around \$300 a month in rent. I'm not too picky on roommates, but I would like somewhere that has a lot of people around so I can get to know as many people as possible. Thanks in advance!"
 
-"Hi. My name is Stephanie. I would like to learn about what housing options I have for living at BYU-Idaho next semester. It will be my first semester there, so I would like to find something that is close to campus and around $300 a month in rent. I'm not too picky on roommates, but I would like somewhere that has a lot of people around so I can get to know as many people as possible. Thanks in advance!"
-
-----
-
-Write your response to Stephanie below. Use the "Rent" dataset, good statistical analysis, and clear writing to make some well supported suggestions to her about apartments that meet her stated criterions. You are free to use other criterion that you think she might find more meaningful as well.
+------------------------------------------------------------------------
 
 ## Response
 
 Dear Stephanie,
 
-Write your response here... (delete this line).
+Below are my top 4 reccomendations for where to live. Based on cost, distance to campus, and number of residents, I have narrowed down the options to the following apartments. 
 
-
-<!-- Hint, you should probably subset the Rent dataset to only show the "Approved Women's Housing" since Stephanie won't be interested in Male Housing options. Notice how this text in green doesn't show up in the HTML output because we used the HTML comment tags around this text. --> 
+-------------------------------------------------------------------------
 
 ```{r}
 # Code to get you started, be sure to use a subset of Rent instead of Rent in this code though.
-datatable(Rent, options=list(lengthMenu = c(3,10,30)), extensions="Responsive")
-# Filter for women's housing and rent close to $300
+# datatable(Rent, options=list(lengthMenu = c(3,10,30)), extensions="Responsive")
+
 women_housing <- Rent %>%
   filter(Gender == "F")
 
@@ -66,37 +62,88 @@ women_housing3 <- women_housing_main %>%
   filter(Residents > (median(women_housing_main$Residents)) &
     CrowFlyMetersToMC <  median(women_housing_main$CrowFlyMetersToMC))
 
-View(women_housing3)
+# View(women_housing3)
 
 
 ```
 
 ```{r}
+
+women_housing_table <- women_housing3 %>%
+  select(Name, AvgFloorPlanCostMonthly, Residents, CrowFlyMetersToMC)
+women_housing_table %>%
+  kable() #Kable is a way to turn the table into looking cleaner. This way it's more professional to read.
+
 ggplot(women_housing3, aes(x = reorder(Name, -AvgFloorPlanCostMonthly), y = AvgFloorPlanCostMonthly)) +
   geom_col(fill = "steelblue", color = "black") +
   labs(title = "Women's Housing and Monthly Rent",
-       x = "Housing Name",
-       y = "Average Monthly Rent ($)") +
-  theme_minimal()
+       x = "Apartment",
+       y = "Average Monthly Rent") +
+  theme_minimal() +
+  coord_flip()
+
 
 ```
+
+-Residents were narrowed down from the given choices to those that had average and above average resident amounts.
+
 ```{r}
-ggplot(women_housing3, aes(x = reorder(Name, -Residents), y = Residents)) +
+ggplot(women_housing3, aes(x = reorder(Name, Residents), y = Residents)) +
   geom_col(fill = "steelblue", color = "black") +
   labs(title = "Women's Housing and Residents",
-       x = "Housing Name",
-       y = "Total Residents") +
-  theme_minimal()
-
+       y = "Total Residents",
+       x = "Apartment") +
+  theme_minimal() +
+  coord_flip()
 ```
+
 ```{r}
 ggplot(women_housing3, aes(x = reorder(Name, -CrowFlyMetersToMC), y = CrowFlyMetersToMC)) +
   geom_col(fill = "steelblue", color = "black") +
   labs(title = "Women's Housing and Distance to MC",
-       x = "Housing Name",
+       x = "Apartment",
        y = "Distance to MC") +
-  theme_minimal()
+  theme_minimal() +
+  coord_flip()
 
 ```
 
-[^1]: Note that Stephanie is a fictional character who is based on real experiences of many faculty and staff here at BYU-Idaho.
+```{r}
+# Creating ranked columns
+women_housing3$Rank_AvgFloorPlanCostMonthly <- rank(women_housing3$AvgFloorPlanCostMonthly, ties.method = "min")
+women_housing3$Rank_Residents <- rank(women_housing3$Residents, ties.method = "min")
+women_housing3$Rank_Distance_MC <- rank(women_housing3$CrowFlyMetersToMC, ties.method = "min")
+
+women_housing3$Average_Row <- rowMeans(women_housing3[, c("Rank_AvgFloorPlanCostMonthly", "Rank_Residents", "Rank_Distance_MC")], na.rm = TRUE)
+
+
+women_housing3$Average_Row <- round(women_housing3$Average_Row, 2)
+```
+
+------------------------------------------------------------------------
+
+## Conclusion
+
+-Below is a ranking for the top apartments suggested with the lower rating being a better housing match for you. On average Riviera is the best option for you but the other 3 are still within your range of what you're looking for. But that is my suggestion for you based on the information requested. Good luck with the apartment search!
+
+-------------------------------------------------------------------------
+
+
+```{r}
+women_ranking_table <- women_housing3 %>%
+  select(Name, Rank_AvgFloorPlanCostMonthly, Rank_Residents, Rank_Distance_MC, Average_Row)
+women_ranking_table %>%
+  kable()
+
+# ggplot(women_housing3, aes(x = reorder(Name, -Average_Row), y = Average_Row)) + #The "-" means to make the order descending. To flip it.
+#   geom_col(fill = "steelblue", color = "black") +
+#   labs(title = "Average Ranking of Apartments",
+#        x = "Apartment",
+#        y = "Average Rank") +
+#   theme_minimal() +
+#   coord_flip()
+
+
+# View(women_housing3)
+
+```
