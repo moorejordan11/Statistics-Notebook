@@ -97,14 +97,46 @@ ggplot(women_housing3, aes(x = reorder(Name, Residents), y = Residents)) +
   coord_flip()
 ```
 
+
+-The green colored dots are the 4 I suggest you look into. The red dots are the ones that are sufficient. The blue dots are the ones that are not as cheap as you would like or farther away then desired. The size of the dots represent the number of residents in the apartment. The table below that is a few other suggestions if for some reason the favorites don't work out for you.
+
+
 ```{r}
-ggplot(women_housing3, aes(x = reorder(Name, -CrowFlyMetersToMC), y = CrowFlyMetersToMC)) +
-  geom_col(fill = "steelblue", color = "black") +
-  labs(title = "Women's Housing and Distance to MC",
-       x = "Apartment",
-       y = "Distance to MC") +
-  theme_minimal() +
-  coord_flip()
+# ggplot(women_housing3, aes(x = reorder(Name, -CrowFlyMetersToMC), y = CrowFlyMetersToMC)) +
+#   geom_col(fill = "steelblue", color = "black") +
+#   labs(title = "Women's Housing and Distance to MC",
+#        x = "Apartment",
+#        y = "Distance to MC") +
+#   theme_minimal() +
+#   coord_flip()
+
+womenhousing4 <- women_housing2 %>% 
+  filter(Gender == "F")
+
+
+womenhousing4$chosen <- ifelse(womenhousing4$Name %in% women_housing3$Name, "Favorite",ifelse(womenhousing4$AvgFloorPlanCostMonthly < 300 & womenhousing4$CrowFlyMetersToMC < 618, 
+                                      "Desired", 
+                                      "Normal"))
+
+
+meanhousing <- womenhousing4 %>% 
+  summarize(mean_cost = mean(AvgFloorPlanCostMonthly), mean_distance = mean(CrowFlyMetersToMC))
+
+belowmean <- womenhousing4 %>% 
+  filter(womenhousing4$chosen == "Desired")
+
+belowmean2 <- select(belowmean, c(Name, AvgFloorPlanCostMonthly, CrowFlyMetersToMC, Residents))
+
+# belowmean2 <- round(belowmean2$AvgFloorPlanCostMonthly, 2)
+# belowmean2 <- round(belowmean2$CrowFlyMetersToMC, 2)
+
+
+
+# meanhousing %>% kable()
+
+ggplot(womenhousing4, aes(x =AvgFloorPlanCostMonthly, y= CrowFlyMetersToMC, color = chosen, size = Residents)) + geom_point()
+
+belowmean2 %>% kable()
 
 ```
 

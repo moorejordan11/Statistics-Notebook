@@ -1,0 +1,86 @@
+---
+title: "starwars"
+output: html_document
+date: "2024-10-02"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+library(tidyverse)
+library(ggplot2)
+library(mosaic)
+library(dplyr)
+library(pander)
+library(knitr)
+library(DT)
+# View(starwars)
+# ?starwars
+```
+
+## Including Plots
+
+
+```{r pressure, echo=FALSE}
+#| warning: false
+ggplot(starwars, aes(x=height)) + geom_histogram(fill="steelblue",color= "black") +
+  labs(
+    title = "Distribution of Height of Star Wars Characters",
+    x="Character Height",
+    y="Frequency"
+  )
+favstats(starwars$height~starwars$gender)
+
+```
+```{r}
+#| echo: false
+#| warning: false
+ggplot(starwars, aes(x=factor(gender),y=height)) + geom_boxplot(fill="steelblue",color= "black")
+
+
+
+```
+
+```{r}
+#| echo: false
+#| warning: false
+
+ggplot(starwars, aes(x=factor(gender),y=height)) + geom_dotplot(binaxis='y', stackdir='center', fill="steelblue",color= "black") +
+  labs(
+    title = "Distribution of Height of Star Wars Characters")
+
+```
+
+```{r}
+#| echo: false
+#| warning: false
+
+ggplot(starwars, aes(x=birth_year, y=mass)) + geom_point()
+cor(starwars$birth_year, starwars$mass, use="complete.obs")
+
+```
+
+
+```{r}
+#| echo: false
+#| warning: false
+
+ggplot(starwars, aes(x=factor(species))) + geom_bar(position="dodge", fill="steelblue",color= "black") +
+    labs(
+    title = "Distribution of Star Wars Characters by Homeworld",
+    x="Homeworld",
+    y="Frequency"
+  ) +
+  coord_flip()
+
+table(starwars$species)
+
+```
