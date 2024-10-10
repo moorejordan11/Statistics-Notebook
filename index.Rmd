@@ -47,16 +47,47 @@ Or to a page on the internet: [R Colors](http://www.stat.columbia.edu/~tzheng/fi
 mean(airquality$Temp)
 ```
 
+```{r}
+# <!-- womenhousing4$chosen <- ifelse(womenhousing4$Name %in% women_housing3$Name, "Favorite",ifelse(womenhousing4$AvgFloorPlanCostMonthly < 300 & womenhousing4$CrowFlyMetersToMC < 618, "Desired","Normal")) -->\
+# 
+# <!-- country_copy <- countries %>%  -->
+# <!--   pivot_longer(cols = matches("^\\d{4}$"), names_to = "year", values_to = "height") -->
+# 
+# <!-- outputTable <- rbind(Residents=favstats(Rent$Residents)) -->
+# <!-- pander(outputTable[c("min", "Q1", "median", "mean", "Q3", "max", "n")],  -->
+# <!--        caption="Resident Amount Summary") -->
+```
 
+```{r}
+# Degrees of Freedom (DF) is a concept that appears in many statistical calculations, and it refers to the number of values in a calculation that are free to vary. In simpler terms, degrees of freedom tell us how much "flexibility" we have in a statistical calculation before we lock down all of our values.
+# 
+# Here’s an analogy: Imagine you have three friends, and the average of their ages is 20. If I tell you the ages of two of the friends, you can automatically calculate the age of the third one, right? That’s because two values are free to vary, but the third one is locked by the fact that their average must be 20. In this case, there are 2 degrees of freedom.
 
+```
 
+```{r}
+# A Z-score tells you how many standard deviations a specific data point (
+# 𝑥
+# x) is from the mean (
+# 𝜇
+# μ) of a distribution. It can be positive or negative:
+# A positive Z-score means the data point is above the mean.
+# A negative Z-score means the data point is below the mean.
+# A Z-score of 0 means the data point is exactly at the mean.
+# 
+# t_results <- t.test(uptake ~ Type, data=CO2.chilled.250)
+# t_results
+# t = 6.2075, df = 3.8818, p-value = 0.003782
+# alternative hypothesis: true difference in means between group Quebec and group Mississippi is not equal to 0
+# 95 percent confidence interval:
+#  10.05213 26.68120
+# library(car)
+# The values are safe for the hypothesis because they do not go outside the lines.
+# qqPlot(uptake ~ Type, data = CO2.chilled.250)
+# If the sample sizes are less than 30, you need to check whether the underlying populations are normally distributed. This can be visually assessed using a Q-Q plot (quantile-quantile plot).
+# A Q-Q plot compares the quantiles of the sample data to the quantiles of a normal distribution. If the points on the Q-Q plot fall approximately along a straight line, this suggests that the data are normally distributed.
 
-
-
-
-
-
-
+```
 
 
 <!-- End your notes before here. ------------------------------------- -->
