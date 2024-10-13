@@ -11,6 +11,7 @@ library(tidyverse)
 library(DT)
 library(pander)
 library(readr)
+library(car)
 
 HSS <- read_csv("../../Data/HighSchoolSeniors.csv")
 #If this code does not work: 
@@ -44,11 +45,119 @@ HSS <- HSS %>%
 
 -->
 
+## Does sleep on a schoolnight affect performance in the memory games or reaction time?
+
+### Hypotheses
+Null Hypothesis (H0): There is no significant relationship between the number of hours of sleep on school nights and scores in the memory game or reaction time. In other words, sleep duration does not affect memory game performance or lead to a quicker reaction time.
+
+Alternative Hypothesis (H1): The number of hours of sleep on school nights significantly affects scores in the memory game and reaction time. Specifically, students who get more sleep on school nights will have higher scores in the memory game or a quicker reaction time.
 
 
 
+```{r}
+# View(HSS)
+
+sleep <- (HSS) %>% 
+  select(Gender, Ageyears, Score_in_memory_game, Reaction_time, Sleep_Hours_Schoolnight) %>% 
+  filter(!is.na(Sleep_Hours_Schoolnight))
+
+# sleep <- (HSS) %>% 
+#   select(Gender, Ageyears, Score_in_memory_game, Reaction_time, Sleep_Hours_Schoolnight, Sleep_Hours_Non_Schoolnight) %>% 
+#   filter(!is.na(Sleep_Hours_Non_Schoolnight))
+
+sleep <- sleep %>% 
+  filter(Sleep_Hours_Schoolnight < 20,
+         !is.na(Sleep_Hours_Schoolnight),
+         !is.na(Score_in_memory_game),
+         !is.na(Reaction_time))
+
+# sleep <- sleep %>% 
+#   filter(Sleep_Hours_Non_Schoolnight < 20)
+
+# View(sleep)
 
 
+```
+
+## Sleep and Memory Games
+
+```{r}
+sleep_grouped <- sleep %>%
+  mutate(Sleep_Hours_Categorical = case_when(
+    Sleep_Hours_Schoolnight <=  6 ~ "Group 1",
+    Sleep_Hours_Schoolnight > 6 ~ "Group 2"
+  ))
 
 
+ggplot(sleep_grouped, aes(x = Sleep_Hours_Schoolnight, y = Score_in_memory_game )) +
+  geom_point() +
+  geom_line() +
+  geom_smooth(aes(group = 1), method = "lm", se = FALSE, formula= y ~ x, color = "red") +
+  labs(title = "Mean Score in Memory Game by Sleep Hours on Schoolnight",
+       x = "Sleep Hours on Schoolnight",
+       y = "Score in Memory Game")
+
+
+unique_groups <- unique(sleep_grouped$Sleep_Hours_Categorical)
+
+for (grp in unique_groups) {
+  subset_data <- subset(sleep_grouped, Sleep_Hours_Categorical == grp)
+  qqPlot(subset_data$Score_in_memory_game, 
+         main = paste("QQ Plot for", grp), 
+         xlab = "Theoretical Quantiles", 
+         ylab = "Sample Quantiles")
+}
+
+t_test_result <- t.test(sleep_grouped$Sleep_Hours_Schoolnight, sleep_grouped$Score_in_memory_game, alternative = "two.sided", mu = 0, conf.level = 0.95)
+
+print(t_test_result)
+
+```
+### Summary of Results
+The large absolute t-value suggests a significant difference between the groups. This interval suggests that the true difference in means (between the two groups) lies between approximately 
+40.84 and 38.36. Since the interval does not include zero, this supports the conclusion that there is a significant difference.
+
+The p-value of less than 2% indicates that at the 0.05 significance level we can reject the null hypothesis that sleep does not affect the memory game scores of students. the negative confidence interval indicates that the group with less sleep has lower memory scores compared to the group with more sleep.
+
+### Sleep and Reaction Time
+
+```{r}
+
+sleep_grouped2 <- sleep %>%
+  mutate(Sleep_Hours_Categorical = case_when(
+    Sleep_Hours_Schoolnight <=  6 ~ "Group 1",
+    Sleep_Hours_Schoolnight > 6 ~ "Group 2"
+  ))
+
+
+ggplot(sleep_grouped2, aes(x = Sleep_Hours_Schoolnight, y = Reaction_time)) +
+  geom_point() +
+  geom_smooth(aes(group = 1), method = "lm", se = FALSE, formula= y ~ x, color = "red") +
+  labs(title = "Mean Score in Memory Game by Sleep Hours on Schoolnight",
+       x = "Sleep Hours on Schoolnight",
+       y = "Reaction Time")
+
+
+unique_groups <- unique(sleep_grouped2$Sleep_Hours_Categorical)
+
+for (grp in unique_groups) {
+  subset_data <- subset(sleep_grouped2, Sleep_Hours_Categorical == grp)
+  qqPlot(subset_data$Reaction_time, 
+         main = paste("QQ Plot for", grp), 
+         xlab = "Theoretical Quantiles", 
+         ylab = "Sample Quantiles")
+}
+
+t_test_result <- t.test(sleep_grouped2$Sleep_Hours_Schoolnight, sleep_grouped2$Reaction_time, alternative = "two.sided", mu = 0, conf.level = 0.95)
+
+print(t_test_result)
+
+```
+### Summary of Results
+
+These results indicate that individuals who sleep less than 6 hours tend to have significantly higher reaction times compared to those who sleep 6 hours or more. The statistical analysis confirms that this difference is significant (p-value < 0.05) and we can reject the null hypothesis that sleep does not affect reaction time.
+
+
+## Conclusion
+We know that sleep is an important factor in our lives and can affect our health but does it affect our cognitive ability? According to the data it does. But in different ways, we see that those with less sleep have worse scores in the memory games but that those with less sleep have quicker reaction times. This could be due to the fact that those with less sleep are more alert and can react quicker but their cognitive function can retain information for longer periods.
 
