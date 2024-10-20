@@ -11,6 +11,7 @@ library(mosaic)
 library(car)
 library(pander)
 library(DT) #You may need to run: install.packages("DT") 
+library(tidyverse)
 ```
 
 ```{r, eval=FALSE}
@@ -18,9 +19,8 @@ library(DT) #You may need to run: install.packages("DT")
 # Note the eval=FALSE statement in this R-chunk will exclude this code
 # from running when you Knit and will only work in the Console.
 View(Friendly)
-?Friendly
+?Friendly 
 ```
-
 
 <br />
 
@@ -73,6 +73,8 @@ Click the "Code" button to see the data.
 
 
 ```{r}
+#|echo: false
+#|warning: false
 datatable(Friendly, options=list(lengthMenu = c(3,10,30)))
 ```
 
@@ -84,5 +86,101 @@ datatable(Friendly, options=list(lengthMenu = c(3,10,30)))
 
 <!-- Note that your goal is to use the Friendly data to show whether or not the Meshed or Before methods have any positive benefit on memory recall. -->
 
+<!-- You will need to use the Friendly data to perform a t-test and a Wilcox test to determine if there is a significant difference between the groups. -->
 
+<!-- You will also need to check the assumptions of the t-test using a qqPlot. -->
+
+<!-- You will need to write a conclusion that summarizes your findings. -->
+
+<!-- You will need to write a hypothesis for the t-test and the Wilcox test. -->
+
+### Introduction and Hypothesis
+- The purpose of this study is to determine whether the *Meshed* or *Before* approaches to delivering content had any positive benefits on memory recall. The hypothesis is that their is not a difference between the two groups in memory recall. Our Alternative Hypothesis is that there is a difference between the two groups in memory recall.
+
+```{r}
+#|echo: false
+#|warning: false
+
+
+#Intro and hypothesis
+friendly_data <- Friendly %>% 
+  filter(condition != "SFR")
+
+friendly_data=droplevels(friendly_data)
+
+ggplot(friendly_data, aes(x = condition, y = correct, color=condition)) +
+  geom_boxplot() +
+  labs(title = "Memory Recall by Condition",
+       x = "Condition",
+       y = "Correct Answers") +
+  theme_minimal()
+
+# View(friendly_data)
+```
+
+### Data Statistics
+- Fav Stats Test
+```{r}
+#|echo: false
+#|warning: false
+
+
+favstats(correct ~ condition, data = friendly_data)
+```
+- From a fav stats test the data shows that the data between the two groups are very similar as they have the same mean but do have separate medians. 
+
+- Now we need to confirm the hypothesis by running a T-Test and a Wilcox Test to determine if there is a significant difference between the groups. We will also need to check the assumptions of the t-test using a qqPlot. If we achieve a P-Value of greater than 0.5 we will fail to reject our null hypothesis and accept that there is no difference between the two groups in memory recall.
+
+### T-Test Results
+
+```{r}
+#|echo: false
+#|warning: false
+
+#T-Test to do
+
+t.test(correct ~ condition, data = friendly_data)
+```
+
+- We see from the T-Test that the t-value and the p-value are 0 and 1 respectively which means that we fail to reject the null hypothesis. This means that there is no difference between the two groups in memory recall.
+
+
+```{r}
+#|echo: false
+#|warning: false
+
+
+#qqPlot
+
+qqPlot(friendly_data$correct, distribution = "norm",
+      main = "QQ Plot of Correct Scores",
+      xlab = "Theoretical Quantiles",
+      ylab = "Sample Quantiles")
+
+```
+
+### QQ Plot
+- The QQ plot shows that the data is normally distributed. This is important because the t-test assumes that the data is normally distributed with no differences. To meet the requirements we need a test statistic which we have with the t-test near 0. We have a sample distribution that is normal and the data is normally distributed and if we repeated the test multiple times we see that it would be near consistent.
+We see with tests 6 and 7 that they fall outside the normal distribution and are referenced because of that.
+
+
+```{r}
+#|echo: false
+#|warning: false
+
+
+#Wilcox Test
+
+wilcox.test(correct ~ condition, data = friendly_data, exact= FALSE)
+
+
+
+```
+
+### Wilcox Test Results
+- Since the p-value is relatively large (0.378), it suggests that there is no significant difference between the medians of the two groups being compared.The null hypothesis is not rejected.
+
+
+### Conclusion
+- Due to the test data from the Wilcox test we fail to reject the null hypothesis leading to the acceptance that there is *no* difference between the two groups in memory recall. This means that the *Meshed* or *Before* approaches to delivering content had no positive benefits on memory recall.
 
