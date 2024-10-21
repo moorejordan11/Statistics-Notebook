@@ -89,6 +89,27 @@ mean(airquality$Temp)
 
 ```
 
+```{r}
+ANOVA Test
+Why do we use ANOVA?
+
+Imagine you have three or more groups (for example, different teaching methods) and you want to know if they all have the same effect on students’ test scores. ANOVA helps you check if the average test scores for each group are different.
+If you just compare two groups, you could use a t-test. But when there are three or more groups, an ANOVA is more efficient because it can compare all the groups at once.
+How does it work?
+
+ANOVA splits the variation in the data into two parts:
+Within-group variation: How much the values differ within each group.
+Between-group variation: How much the group averages differ from each other.
+The test compares these two variations to see if the differences between groups are bigger than what would be expected by random chance.
+What do the results tell us?
+
+p-value: If the p-value is small (usually less than 0.05), it means at least one group is different from the others.
+If the p-value is large, it means that any differences you see in the group means could be due to random chance, and the groups are not significantly different from each other.
+What ANOVA doesn’t tell you:
+
+ANOVA tells you that there’s a difference, but it doesn’t tell you which groups are different. To find that out, you need to run further tests (called post-hoc tests).
+```
+
 
 <!-- End your notes before here. ------------------------------------- -->
 ##
