@@ -540,6 +540,48 @@ Colors</a></p>
 <span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co"># qqPlot(uptake ~ Type, data = CO2.chilled.250)</span></span>
 <span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co"># If the sample sizes are less than 30, you need to check whether the underlying populations are normally distributed. This can be visually assessed using a Q-Q plot (quantile-quantile plot).</span></span>
 <span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co"># A Q-Q plot compares the quantiles of the sample data to the quantiles of a normal distribution. If the points on the Q-Q plot fall approximately along a straight line, this suggests that the data are normally distributed.</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># ANOVA Test</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co"># Why do we use ANOVA?</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co"># Imagine you have three or more groups (for example, different teaching methods) and you want to know if they all have the same effect on students’ test scores. ANOVA helps you check if the average test scores for each group are different.</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co"># If you just compare two groups, you could use a t-test. But when there are three or more groups, an ANOVA is more efficient because it can compare all the groups at once.</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co"># How does it work?</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co"># ANOVA splits the variation in the data into two parts:</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co"># Within-group variation: How much the values differ within each group.</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co"># Between-group variation: How much the group averages differ from each other.</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co"># The test compares these two variations to see if the differences between groups are bigger than what would be expected by random chance.</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co"># What do the results tell us?</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co"># p-value: If the p-value is small (usually less than 0.05), it means at least one group is different from the others.</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co"># If the p-value is large, it means that any differences you see in the group means could be due to random chance, and the groups are not significantly different from each other.</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co"># What ANOVA doesn’t tell you:</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co"># ANOVA tells you that there’s a difference, but it doesn’t tell you which groups are different. To find that out, you need to run further tests (called post-hoc tests).</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Tests for Normality</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co"># [t test](tTests.html)</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co"># One Sample T-Test:Standard Dev is unknown and we have one group.</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co"># Paired T-Test: Two groups are paired and we are comparing the means of the two groups. Length-width*3 created a new column.   pretest-posttest, same group with links like marriage.</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co"># Independent sample T-test: Two groups are independent and we are comparing the means of the two groups. Different classes, no direct relationship between the two. Variables don&#39;t depend on each other.</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co"># [Wilcoxon](WilcoxonTest.html)</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co"># Wilxocin Signed Rank Test: Nonparametric version of one sample t-test. If the data is not normally distributed, we use this test. ANd Paired T-test is used when the data is normally distributed. If it&#39;s a low sample it&#39;d be a nonparametric test.</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co"># Mann-Whitney U Test:Nonparametric version of independent sample t-test. If the data is not normally distributed, we use this test.</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co"># [ANOVA](ANOVA.html)</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co"># One-Way ANOVA: Three or more groups extension of the independent samples t test.</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># Skills Week 6</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co"># Factor is a categorical variable like temperature or month even if numbers.</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co"># Levels of the factor is the different categories of the factor. Jan, Feb, Mar, etc.</span></span></code></pre></div>
 <!-- End your notes before here. ------------------------------------- -->
 </div>
 </div>
@@ -548,7 +590,7 @@ Colors</a></p>
 <hr />
 <div class="tooltipimage" style="float:left;width:125px;"
 align="center">
-<p><img src="Images/QuantY.png" width=35px;> <span
+<p><img src="Images/QuantY.png" width="35px;"/> <span
 class="tooltipimagetext">Y is a single quantitative variable of
 interest. This would be like “heights” of BYU-Idaho students.</span></p>
 </div>
@@ -564,11 +606,11 @@ Y</h2>
 <p>Add your own notes about graphics to use for this type of data
 here.</p>
 <p><a href="GraphicalSummaries.html#histogram">
-<img class="myhover" src="Images/histogram.png" alt="Histogram" title="Histogram">
+<img src="Images/histogram.png" title="Histogram" alt="Histogram" class="myhover"/>
 </a> <a href="GraphicalSummaries.html#dot-plots">
-<img class="myhover" src="Images/dotplotsingle.png" alt="Dot Plot" title="Dot Plot">
+<img src="Images/dotplotsingle.png" title="Dot Plot" alt="Dot Plot" class="myhover"/>
 </a> <a href="GraphicalSummaries.html#boxplots">
-<img class="myhover" src="Images/boxplotsingle.png" alt="Boxplot" title="Boxplot">
+<img src="Images/boxplotsingle.png" title="Boxplot" alt="Boxplot" class="myhover"/>
 </a></p>
 <!--- End your notes before here.  ------------------>
 </div>
@@ -603,7 +645,7 @@ table(KidsFeet$sex)</p>
 <hr />
 <div class="tooltipimage" style="float:left;width:125px;"
 align="center">
-<p><img src="Images/QuantYQualXg2.png" width=59px;> <span
+<p><img src="Images/QuantYQualXg2.png" width="59px;"/> <span
 class="tooltipimagetext">Y is a single quantitative variable of
 interest. This would be like “heights” of BYU-Idaho students. X is a
 qualitative (categorical) variable of interest like “gender” that has
@@ -622,9 +664,9 @@ Groups)</h2>
 <p>Add your own notes about graphics to use for this type of data
 here.</p>
 <p><a href="GraphicalSummaries.html#boxplots">
-<img class="myhover" src="Images/boxplot.png" alt="Side-by-side Boxplots" title="Side-by-side Boxplots">
+<img src="Images/boxplot.png" title="Side-by-side Boxplots" alt="Side-by-side Boxplots" class="myhover"/>
 </a> <a href="GraphicalSummaries.html#dot-plots">
-<img class="myhover" src="Images/dotplotdouble.png" alt="Dot Plot" title="Side-by-side Dot Plots">
+<img src="Images/dotplotdouble.png" title="Side-by-side Dot Plots" alt="Dot Plot" class="myhover"/>
 </a></p>
 <!--- End of Add content area.  ------------------>
 </div>
@@ -645,7 +687,7 @@ here.</p>
 <hr />
 <div class="tooltipimage" style="float:left;width:125px;"
 align="center">
-<p><img src="Images/QuantYQualXg3plus.png" width=59px;> <span
+<p><img src="Images/QuantYQualXg3plus.png" width="59px;"/> <span
 class="tooltipimagetext">Y is a single quantitative variable of
 interest, like “heights” of BYU-Idaho students. X is a categorical
 (qualitative) variable like which Math 221 you took, 221A, 221B, or
@@ -665,9 +707,9 @@ Groups)</h2>
 <p>Add your own notes about graphics to use for this type of data
 here.</p>
 <p><a href="GraphicalSummaries.html#boxplots">
-<img class="myhover" src="Images/boxplotthree.png" alt="Side-by-side Boxplots" title="Side-by-side Boxplots 3+ Groups">
+<img src="Images/boxplotthree.png" title="Side-by-side Boxplots 3+ Groups" alt="Side-by-side Boxplots" class="myhover"/>
 </a> <a href="GraphicalSummaries.html#dot-plots">
-<img class="myhover" src="Images/dotplottriple.png" alt="Side-by-side Dot Plots" title="Side-by-side Dot Plots 3+ Groups">
+<img src="Images/dotplottriple.png" title="Side-by-side Dot Plots 3+ Groups" alt="Side-by-side Dot Plots" class="myhover"/>
 </a></p>
 <!--- End of Add content area.  ------------------>
 </div>
@@ -691,7 +733,7 @@ type of data here.</p>
 <hr />
 <div class="tooltipimage" style="float:left;width:125px;"
 align="center">
-<p><img src="Images/QuantYMultQualX.png" width=80px;> <span
+<p><img src="Images/QuantYMultQualX.png" width="80px;"/> <span
 class="tooltipimagetext">Y is a single quantitative variable of
 interest, like “heights” of BYU-Idaho students. X1 is a categorical
 (qualitative) variable like gender, with levels “boy” and “girl.” X2 is
@@ -711,9 +753,9 @@ X</h2>
 <p>Add your own notes about graphics to use for this type of data
 here.</p>
 <p><a href="GraphicalSummaries.html#boxplots">
-<img class="myhover" src="Images/boxplotthree.png" alt="Side-by-side Boxplots" title="Side-by-side Boxplots 3+ Groups">
+<img src="Images/boxplotthree.png" title="Side-by-side Boxplots 3+ Groups" alt="Side-by-side Boxplots" class="myhover"/>
 </a> <a href="GraphicalSummaries.html#dot-plots">
-<img class="myhover" src="Images/dotplottriple.png" alt="Side-by-side Dot Plots" title="Side-by-side Dot Plots 3+ Groups">
+<img src="Images/dotplottriple.png" title="Side-by-side Dot Plots 3+ Groups" alt="Side-by-side Dot Plots" class="myhover"/>
 </a></p>
 <!--- End of Add content area.  ------------------>
 </div>
@@ -737,7 +779,7 @@ type of data here.</p>
 <hr />
 <div class="tooltipimage" style="float:left;width:125px;"
 align="center">
-<p><img src="Images/QuantYQuantX.png" width=59px;> <span
+<p><img src="Images/QuantYQuantX.png" width="59px;"/> <span
 class="tooltipimagetext">Y is a single quantitative variable of
 interest, like “height”. X is another single quantitative variable of
 interest, like “shoe-size”. This would imply we are using “shoe-size”
@@ -753,7 +795,7 @@ class="section level2 tabset tabset-pills">
 <p>Add your own notes about graphics to use for this type of data
 here.</p>
 <p><a href="GraphicalSummaries.html#scatterplots">
-<img class="myhover" src="Images/scatterplot.png" alt="Scatterplot" title="Scatterplot">
+<img src="Images/scatterplot.png" title="Scatterplot" alt="Scatterplot" class="myhover"/>
 </a></p>
 <!--- End of Add content area.  ------------------>
 </div>
@@ -777,7 +819,7 @@ type of data here.</p>
 <hr />
 <div class="tooltipimage" style="float:left;width:125px;"
 align="center">
-<p><img src="Images/QuantYMultX.png" width=100px;> <span
+<p><img src="Images/QuantYMultX.png" width="100px;"/> <span
 class="tooltipimagetext">Y is a single quantitative variable of
 interest, like height. While we could use an X1 of “shoe-size” to
 explain height, we might also want to use a second x-variable, X2, like
@@ -794,7 +836,7 @@ class="section level2 tabset tabset-pills">
 <p>Add your own notes about graphics to use for this type of data
 here.</p>
 <p><a href="GraphicalSummaries.html#scatterplots">
-<img class="myhover" src="Images/scatterplotmany.png" alt="Scatterplot" title="Scatterplot with Color and Sizing">
+<img src="Images/scatterplotmany.png" title="Scatterplot with Color and Sizing" alt="Scatterplot" class="myhover"/>
 </a></p>
 <!--- End of Add content area.  ------------------>
 </div>
@@ -818,7 +860,7 @@ type of data here.</p>
 <hr />
 <div class="tooltipimage" style="float:left;width:125px;"
 align="center">
-<p><img src="Images/BinomYQuantX.png" width=59px;> <span
+<p><img src="Images/BinomYQuantX.png" width="59px;"/> <span
 class="tooltipimagetext">Y is a single categorical (qualitative)
 variable of interest where 1 (success) or 0 (failure) are the only
 possible values for Y. This would be like “getting an A in Math 325”
@@ -837,7 +879,7 @@ class="section level2 tabset tabset-pills">
 <p>Add your own notes about graphics to use for this type of data
 here.</p>
 <p><a href="GraphicalSummaries.html#scatterplots">
-<img class="myhover" src="Images/scatterplotbinomY.png" alt="Scatterplot with Binomial Y" title="Scatterplot with Binomial Y">
+<img src="Images/scatterplotbinomY.png" title="Scatterplot with Binomial Y" alt="Scatterplot with Binomial Y" class="myhover"/>
 </a></p>
 <!--- End of Add content area.  ------------------>
 </div>
@@ -861,7 +903,7 @@ type of data here.</p>
 <hr />
 <div class="tooltipimage" style="float:left;width:125px;"
 align="center">
-<p><img src="Images/BinomYMultX.png" width=100px;> <span
+<p><img src="Images/BinomYMultX.png" width="100px;"/> <span
 class="tooltipimagetext">Y is a single categorical (qualitative)
 variable of interest where 1 (success) or 0 (failure) are the only
 possible values for Y. This would be like “getting an A in Math 325”
@@ -880,7 +922,7 @@ class="section level2 tabset tabset-pills">
 <p>Add your own notes about graphics to use for this type of data
 here.</p>
 <p><a href="GraphicalSummaries.html#scatterplots">
-<img class="myhover" src="Images/scatterplotbinomYmult.png" alt="Scatterplot with Binomial Y" title="Scatterplot with Binomial Y, including coloring and shading">
+<img src="Images/scatterplotbinomYmult.png" title="Scatterplot with Binomial Y, including coloring and shading" alt="Scatterplot with Binomial Y" class="myhover"/>
 </a></p>
 <!--- End of Add content area.  ------------------>
 </div>
@@ -904,7 +946,7 @@ type of data here.</p>
 <hr />
 <div class="tooltipimage" style="float:left;width:125px;"
 align="center">
-<p><img src="Images/QualYQualX.png" width=59px;> <span
+<p><img src="Images/QualYQualX.png" width="59px;"/> <span
 class="tooltipimagetext">Y is a single categorical variable of interest,
 like gender. X is another categorical variable of interest, like “hair
 color”. This type of data would help us understand if men or women are
@@ -921,7 +963,7 @@ class="section level2 tabset tabset-pills">
 <p>Add your own notes about graphics to use for this type of data
 here.</p>
 <p><a href="GraphicalSummaries.html#bar-charts">
-<img class="myhover" src="Images/barplot.png" alt="Bar Chart" title="Bar Chart">
+<img src="Images/barplot.png" title="Bar Chart" alt="Bar Chart" class="myhover"/>
 </a></p>
 <!--- End of Add content area.  ------------------>
 </div>

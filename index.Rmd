@@ -1,47 +1,58 @@
 ---
 title: "Statistics Notebook"
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 <!-- You can delete the following copyright statement if you wish: -->
 
-<div style="color:gray;"><!-- Code to change the following paragraphs to gray text -->
+:::: {style="color:gray;"}
+<!-- Code to change the following paragraphs to gray text -->
 
-This page, and all pages of this notebook, are meant to be customized to become a useful *Guide to Statistical Analysis* in R for your *current* and *future* self. 
+This page, and all pages of this notebook, are meant to be customized to
+become a useful *Guide to Statistical Analysis* in R for your *current*
+and *future* self.
 
-<div style="font-size:.8em;"><!-- Code to shrink font-size of following paragraph -->
+::: {style="font-size:.8em;"}
+<!-- Code to shrink font-size of following paragraph -->
 
-To begin customizing, [download](https://github.com/saundersg/Statistics-Notebook) your own copy of the book <span style="font-size:.8em;">(if you haven't already)</span>. Please note the [GNU General Public License](https://choosealicense.com/licenses/gpl-3.0/) when downloading. You are free to delete this commentary in your own copy of the notebook.
+To begin customizing,
+[download](https://github.com/saundersg/Statistics-Notebook) your own
+copy of the book [(if you haven't already)]{style="font-size:.8em;"}.
+Please note the [GNU General Public
+License](https://choosealicense.com/licenses/gpl-3.0/) when downloading.
+You are free to delete this commentary in your own copy of the notebook.
+:::
 
-</div><!-- Ends smaller font-size section -->
+<!-- Ends smaller font-size section -->
+::::
 
-</div><!-- End gray text section -->
+<!-- End gray text section -->
 
 <!-- End of download and copyright instructions. -->
 
-
-## Table of Contents 
-
+## Table of Contents
 
 <!-- This is how to comment text out. You can comment out the above instructions if you wish. Comments allow the text to remain in the Rmd file, but not be displayed in the html file. -->
 
-## {.tabset .tabset-fade}
+##  {.tabset .tabset-fade}
 
-### Hide 
+### Hide
 
 ### Show Notes
 
 <!-- This is a great place to add general notes, then "Knit" the file to have your notes show up in your Statistics-Notebook. --------------- -->
 
+Wow! I typed some words. Some [blue words]{style="color:blue;"}, some
+[highlighted words]{style="background-color:yellow;"}, some [big
+words]{style="font-size:2em;"}.
 
+Make a link to a meaningful page of the Statistics-Notebook:
+[Customization Help](RMarkdownHints.html) \<- Read through this page!
 
-
-Wow! I typed some words. Some <span style="color:blue;">blue words</span>, some <span style="background-color:yellow;">highlighted words</span>, some <span style="font-size:2em;">big words</span>.
-
-Make a link to a meaningful page of the Statistics-Notebook: [Customization Help](RMarkdownHints.html) <- Read through this page!
-
-Or to a page on the internet: [R Colors](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf)
-
-
+Or to a page on the internet: [R
+Colors](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf)
 
 ```{r}
 mean(airquality$Temp)
@@ -90,515 +101,472 @@ mean(airquality$Temp)
 ```
 
 ```{r}
-ANOVA Test
-Why do we use ANOVA?
+# ANOVA Test
+# Why do we use ANOVA?
+# 
+# Imagine you have three or more groups (for example, different teaching methods) and you want to know if they all have the same effect on students’ test scores. ANOVA helps you check if the average test scores for each group are different.
+# If you just compare two groups, you could use a t-test. But when there are three or more groups, an ANOVA is more efficient because it can compare all the groups at once.
+# How does it work?
+# 
+# ANOVA splits the variation in the data into two parts:
+# Within-group variation: How much the values differ within each group.
+# Between-group variation: How much the group averages differ from each other.
+# The test compares these two variations to see if the differences between groups are bigger than what would be expected by random chance.
+# What do the results tell us?
+# 
+# p-value: If the p-value is small (usually less than 0.05), it means at least one group is different from the others.
+# If the p-value is large, it means that any differences you see in the group means could be due to random chance, and the groups are not significantly different from each other.
+# What ANOVA doesn’t tell you:
+# 
+# ANOVA tells you that there’s a difference, but it doesn’t tell you which groups are different. To find that out, you need to run further tests (called post-hoc tests).
+```
 
-Imagine you have three or more groups (for example, different teaching methods) and you want to know if they all have the same effect on students’ test scores. ANOVA helps you check if the average test scores for each group are different.
-If you just compare two groups, you could use a t-test. But when there are three or more groups, an ANOVA is more efficient because it can compare all the groups at once.
-How does it work?
+```{r}
+# Tests for Normality
 
-ANOVA splits the variation in the data into two parts:
-Within-group variation: How much the values differ within each group.
-Between-group variation: How much the group averages differ from each other.
-The test compares these two variations to see if the differences between groups are bigger than what would be expected by random chance.
-What do the results tell us?
+# [t test](tTests.html)
 
-p-value: If the p-value is small (usually less than 0.05), it means at least one group is different from the others.
-If the p-value is large, it means that any differences you see in the group means could be due to random chance, and the groups are not significantly different from each other.
-What ANOVA doesn’t tell you:
+# One Sample T-Test:Standard Dev is unknown and we have one group.
+# 
+# Paired T-Test: Two groups are paired and we are comparing the means of the two groups. Length-width*3 created a new column.   pretest-posttest, same group with links like marriage.
+# 
+# Independent sample T-test: Two groups are independent and we are comparing the means of the two groups. Different classes, no direct relationship between the two. Variables don't depend on each other.
 
-ANOVA tells you that there’s a difference, but it doesn’t tell you which groups are different. To find that out, you need to run further tests (called post-hoc tests).
+# [Wilcoxon](WilcoxonTest.html)
+
+# Wilxocin Signed Rank Test: Nonparametric version of one sample t-test. If the data is not normally distributed, we use this test. ANd Paired T-test is used when the data is normally distributed. If it's a low sample it'd be a nonparametric test.
+# 
+# Mann-Whitney U Test:Nonparametric version of independent sample t-test. If the data is not normally distributed, we use this test.
+
+# [ANOVA](ANOVA.html)
+
+# One-Way ANOVA: Three or more groups extension of the independent samples t test.
+
+```
+
+```{r}
+
+# Skills Week 6
+
+# Factor is a categorical variable like temperature or month even if numbers.
+
+# Levels of the factor is the different categories of the factor. Jan, Feb, Mar, etc.
+
 ```
 
 
 <!-- End your notes before here. ------------------------------------- -->
-##
 
-----
+## 
 
-<div style="float:left;width:125px;" align=center class="tooltipimage">
-<img src="./Images/QuantY.png" width=35px;>
-  <span class="tooltipimagetext">Y is a single quantitative variable of interest. This would be like "heights" of BYU-Idaho students.</span>
-</div>
+------------------------------------------------------------------------
+
+::: {.tooltipimage style="float:left;width:125px;" align="center"}
+<img src="./Images/QuantY.png" width="35px;"/> [Y is a single
+quantitative variable of interest. This would be like "heights" of
+BYU-Idaho students.]{.tooltipimagetext}
+:::
 
 ## One Quantitative Response Variable Y {.tabset .tabset-pills}
 
 ### Graphics
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
-
-
 Add your own notes about graphics to use for this type of data here.
-
-
-
-
 
 <a href="GraphicalSummaries.html#histogram">
-  <img class="myhover" src="./Images/histogram.png" alt="Histogram" title="Histogram">
+<img src="./Images/histogram.png" title="Histogram" alt="Histogram" class="myhover"/>
+</a> <a href="GraphicalSummaries.html#dot-plots">
+<img src="./Images/dotplotsingle.png" title="Dot Plot" alt="Dot Plot" class="myhover"/>
+</a> <a href="GraphicalSummaries.html#boxplots">
+<img src="./Images/boxplotsingle.png" title="Boxplot" alt="Boxplot" class="myhover"/>
 </a>
-<a href="GraphicalSummaries.html#dot-plots">
-  <img class="myhover" src="./Images/dotplotsingle.png" alt="Dot Plot" title="Dot Plot">
-</a>
-<a href="GraphicalSummaries.html#boxplots">
-  <img class="myhover" src="./Images/boxplotsingle.png" alt="Boxplot" title="Boxplot">
-</a>
-
-
 
 <!--- End your notes before here.  ------------------>
-</div>
+:::
 
 ### Tests
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
-Add your own notes about appropriate inferential procedures for this type of data here.
-View(KidsFeet)
+Add your own notes about appropriate inferential procedures for this
+type of data here. View(KidsFeet)
 
-Boxplot and Five-number Summary
-#Create a side-by-side boxplot where the y-axis shows the length of KidsFeet and the x-axis shows the gender of the child.
-boxplot(length ~sex, data=KidsFeet)
+Boxplot and Five-number Summary #Create a side-by-side boxplot where the
+y-axis shows the length of KidsFeet and the x-axis shows the gender of
+the child. boxplot(length \~sex, data=KidsFeet)
 
-#Create a five-number summary table in support of the boxplot.
-KidsFeet %>%
-  group_by(sex) %>%
-    summarise(min=min(length), Q1=quantile(length, 0.25), median=median(length), Q3=quantile(length, 0.75), max=max(length)) %>% 
-  pander()
-#Create a bar plot that shows how many boys and how many girls are in the KidsFeet data set.
-barplot(table(KidsFeet$sex), col=c("lightblue",'pink'))
+#Create a five-number summary table in support of the boxplot. KidsFeet
+%\>% group_by(sex) %\>% summarise(min=min(length), Q1=quantile(length,
+0.25), median=median(length), Q3=quantile(length, 0.75),
+max=max(length)) %\>% pander() #Create a bar plot that shows how many
+boys and how many girls are in the KidsFeet data set.
+barplot(table(KidsFeet\$sex), col=c("lightblue",'pink'))
 
 #Create a supporting table of counts for the bar plot.
-table(KidsFeet$sex)
+table(KidsFeet\$sex)
 
-#End of KidsFeet assignment here_________
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#End of KidsFeet assignment here\_\_\_\_\_\_\_\_\_
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
+# 
 
+::: {style="clear:both;"}
+:::
 
-#
-<div style="clear:both;"></div>
+------------------------------------------------------------------------
 
-----
+::: {.tooltipimage style="float:left;width:125px;" align="center"}
+<img src="./Images/QuantYQualXg2.png" width="59px;"/> [Y is a single
+quantitative variable of interest. This would be like "heights" of
+BYU-Idaho students. X is a qualitative (categorical) variable of
+interest like "gender" that has just two groups "A" and "B". So this
+logo represents situtations where we would want to compare heights of
+male (group A) and female (group B) students.]{.tooltipimagetext}
+:::
 
-<div style="float:left;width:125px;" align=center class="tooltipimage">
-<img src="./Images/QuantYQualXg2.png" width=59px;>
-  <span class="tooltipimagetext">Y is a single quantitative variable of interest. This would be like "heights" of BYU-Idaho students. X is a qualitative (categorical) variable of interest like "gender" that has just two groups "A" and "B". So this logo represents situtations where we would want to compare heights of male (group A) and female (group B) students.</span>
-</div>
-
-## Quantitative Y | Categorical X (2 Groups) {.tabset .tabset-pills}
+## Quantitative Y \| Categorical X (2 Groups) {.tabset .tabset-pills}
 
 ### Graphics
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
 Add your own notes about graphics to use for this type of data here.
-
-
-
-
-
-
-
-
-
-
-
-
 
 <a href="GraphicalSummaries.html#boxplots">
-  <img class="myhover" src="./Images/boxplot.png" alt="Side-by-side Boxplots" title="Side-by-side Boxplots">
+<img src="./Images/boxplot.png" title="Side-by-side Boxplots" alt="Side-by-side Boxplots" class="myhover"/>
+</a> <a href="GraphicalSummaries.html#dot-plots">
+<img src="./Images/dotplotdouble.png" title="Side-by-side Dot Plots" alt="Dot Plot" class="myhover"/>
 </a>
-<a href="GraphicalSummaries.html#dot-plots">
-  <img class="myhover" src="./Images/dotplotdouble.png" alt="Dot Plot" title="Side-by-side Dot Plots">
-</a>
-
-
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
 ### Tests
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
-
-
-
-
-
-
-
-
-
-
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
+## 
 
+::: {style="clear:both;"}
+:::
 
+------------------------------------------------------------------------
 
+::: {.tooltipimage style="float:left;width:125px;" align="center"}
+<img src="./Images/QuantYQualXg3plus.png" width="59px;"/> [Y is a single
+quantitative variable of interest, like "heights" of BYU-Idaho students.
+X is a categorical (qualitative) variable like which Math 221 you took,
+221A, 221B, or 221C. In other words, X has three or more groups. So
+"Classrank" could be X, with groups "Freshman", "Sophomore", "Junior",
+and "Senior".]{.tooltipimagetext}
+:::
 
-##
-<div style="clear:both;"></div>
-
-----
-
-<div style="float:left;width:125px;" align=center class="tooltipimage">
-<img src="./Images/QuantYQualXg3plus.png" width=59px;>
-  <span class="tooltipimagetext">Y is a single quantitative variable of interest, like "heights" of BYU-Idaho students. X is a categorical (qualitative) variable like which Math 221 you took, 221A, 221B, or 221C. In other words, X has three or more groups. So "Classrank" could be X, with groups "Freshman", "Sophomore", "Junior", and "Senior".</span>
-</div>
-
-## Quantitative Y | Categorical X (3+ Groups) {.tabset .tabset-pills}
+## Quantitative Y \| Categorical X (3+ Groups) {.tabset .tabset-pills}
 
 ### Graphics
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
 Add your own notes about graphics to use for this type of data here.
-
-
-
-
-
-
-
-
-
-
-
 
 <a href="GraphicalSummaries.html#boxplots">
-  <img class="myhover" src="./Images/boxplotthree.png" alt="Side-by-side Boxplots" title="Side-by-side Boxplots 3+ Groups">
-</a>
-<a href="GraphicalSummaries.html#dot-plots">
-  <img class="myhover" src="./Images/dotplottriple.png" alt="Side-by-side Dot Plots" title="Side-by-side Dot Plots 3+ Groups">
+<img src="./Images/boxplotthree.png" title="Side-by-side Boxplots 3+ Groups" alt="Side-by-side Boxplots" class="myhover"/>
+</a> <a href="GraphicalSummaries.html#dot-plots">
+<img src="./Images/dotplottriple.png" title="Side-by-side Dot Plots 3+ Groups" alt="Side-by-side Dot Plots" class="myhover"/>
 </a>
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
 ### Tests
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
-Add your own notes about appropriate inferential procedures for this type of data here.
-
-
-
-
-
+Add your own notes about appropriate inferential procedures for this
+type of data here.
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
-#
-<div style="clear:both;"></div>
+# 
 
-----
+::: {style="clear:both;"}
+:::
 
+------------------------------------------------------------------------
 
+::: {.tooltipimage style="float:left;width:125px;" align="center"}
+<img src="./Images/QuantYMultQualX.png" width="80px;"/> [Y is a single
+quantitative variable of interest, like "heights" of BYU-Idaho students.
+X1 is a categorical (qualitative) variable like gender, with levels
+"boy" and "girl." X2 is another categorical (qualitative) variable like
+"Classrank" with levels "Freshman", "Sophomore", and "Junior". Of
+course, both X1 and X2 can have as many levels as you want to work with,
+but must have at least two levels each.]{.tooltipimagetext}
+:::
 
-
-<div style="float:left;width:125px;" align=center class="tooltipimage">
-<img src="./Images/QuantYMultQualX.png" width=80px;>
-  <span class="tooltipimagetext">Y is a single quantitative variable of interest, like "heights" of BYU-Idaho students. X1 is a categorical (qualitative) variable like gender, with levels "boy" and "girl." X2 is another categorical (qualitative) variable like "Classrank" with levels "Freshman", "Sophomore", and "Junior". Of course, both X1 and X2 can have as many levels as you want to work with, but must have at least two levels each.</span>
-</div>
-
-## Quantitative Y | Multiple Categorical X {.tabset .tabset-pills}
+## Quantitative Y \| Multiple Categorical X {.tabset .tabset-pills}
 
 ### Graphics
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
 Add your own notes about graphics to use for this type of data here.
-
-
-
-
-
-
-
-
-
-
-
 
 <a href="GraphicalSummaries.html#boxplots">
-  <img class="myhover" src="./Images/boxplotthree.png" alt="Side-by-side Boxplots" title="Side-by-side Boxplots 3+ Groups">
-</a>
-<a href="GraphicalSummaries.html#dot-plots">
-  <img class="myhover" src="./Images/dotplottriple.png" alt="Side-by-side Dot Plots" title="Side-by-side Dot Plots 3+ Groups">
+<img src="./Images/boxplotthree.png" title="Side-by-side Boxplots 3+ Groups" alt="Side-by-side Boxplots" class="myhover"/>
+</a> <a href="GraphicalSummaries.html#dot-plots">
+<img src="./Images/dotplottriple.png" title="Side-by-side Dot Plots 3+ Groups" alt="Side-by-side Dot Plots" class="myhover"/>
 </a>
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
 ### Tests
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
-Add your own notes about appropriate inferential procedures for this type of data here.
-
-
-
-
-
+Add your own notes about appropriate inferential procedures for this
+type of data here.
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
-#
-<div style="clear:both;"></div>
+# 
 
-----
+::: {style="clear:both;"}
+:::
 
+------------------------------------------------------------------------
 
-<div style="float:left;width:125px;" align=center class="tooltipimage">
-<img src="./Images/QuantYQuantX.png" width=59px;>
-  <span class="tooltipimagetext">Y is a single quantitative variable of interest, like "height". X is another single quantitative variable of interest, like "shoe-size". This would imply we are using "shoe-size" (X) to explain "height" (Y).</span>
-</div>
+::: {.tooltipimage style="float:left;width:125px;" align="center"}
+<img src="./Images/QuantYQuantX.png" width="59px;"/> [Y is a single
+quantitative variable of interest, like "height". X is another single
+quantitative variable of interest, like "shoe-size". This would imply we
+are using "shoe-size" (X) to explain "height" (Y).]{.tooltipimagetext}
+:::
 
-## Quantitative Y | Quantitative X {.tabset .tabset-pills}
+## Quantitative Y \| Quantitative X {.tabset .tabset-pills}
 
 ### Graphics
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
 Add your own notes about graphics to use for this type of data here.
-
-
-
-
-
-
-
-
 
 <a href="GraphicalSummaries.html#scatterplots">
-  <img class="myhover" src="./Images/scatterplot.png" alt="Scatterplot" title="Scatterplot">
+<img src="./Images/scatterplot.png" title="Scatterplot" alt="Scatterplot" class="myhover"/>
 </a>
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
 ### Tests
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
-Add your own notes about appropriate inferential procedures for this type of data here.
-
-
-
-
-
+Add your own notes about appropriate inferential procedures for this
+type of data here.
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
-#
-<div style="clear:both;"></div>
+# 
 
-----
+::: {style="clear:both;"}
+:::
 
-<div style="float:left;width:125px;" align=center class="tooltipimage">
-<img src="./Images/QuantYMultX.png" width=100px;>
-  <span class="tooltipimagetext">Y is a single quantitative variable of interest, like height. While we could use an X1 of "shoe-size" to explain height, we might also want to use a second x-variable, X2, like "gender" to help explain height. Further x-variables could also be used.</span>
-</div>
+------------------------------------------------------------------------
 
-## Quantitative Y | Multiple X {.tabset .tabset-pills}
+::: {.tooltipimage style="float:left;width:125px;" align="center"}
+<img src="./Images/QuantYMultX.png" width="100px;"/> [Y is a single
+quantitative variable of interest, like height. While we could use an X1
+of "shoe-size" to explain height, we might also want to use a second
+x-variable, X2, like "gender" to help explain height. Further
+x-variables could also be used.]{.tooltipimagetext}
+:::
+
+## Quantitative Y \| Multiple X {.tabset .tabset-pills}
 
 ### Graphics
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
 Add your own notes about graphics to use for this type of data here.
-
-
-
-
-
-
-
-
 
 <a href="GraphicalSummaries.html#scatterplots">
-  <img class="myhover" src="./Images/scatterplotmany.png" alt="Scatterplot" title="Scatterplot with Color and Sizing">
+<img src="./Images/scatterplotmany.png" title="Scatterplot with Color and Sizing" alt="Scatterplot" class="myhover"/>
 </a>
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
 ### Tests
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
-Add your own notes about appropriate inferential procedures for this type of data here.
-
-
-
-
-
+Add your own notes about appropriate inferential procedures for this
+type of data here.
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
-#
-<div style="clear:both;"></div>
+# 
 
-----
+::: {style="clear:both;"}
+:::
 
-<div style="float:left;width:125px;" align=center class="tooltipimage">
-<img src="./Images/BinomYQuantX.png" width=59px;>
-  <span class="tooltipimagetext">Y is a single categorical (qualitative) variable of interest where 1 (success) or 0 (failure) are the only possible values for Y. This would be like "getting an A in Math 325" where 1 means you got an A and 0 means you didn't. We might use an explanatory variable X of "height" to see if taller students are more likely to get an A in Math 325 than shorter students. (They aren't, if you were wondering.)</span>
-</div>
+------------------------------------------------------------------------
 
-## Binomial Y | Quantitative X {.tabset .tabset-pills}
+::: {.tooltipimage style="float:left;width:125px;" align="center"}
+<img src="./Images/BinomYQuantX.png" width="59px;"/> [Y is a single
+categorical (qualitative) variable of interest where 1 (success) or 0
+(failure) are the only possible values for Y. This would be like
+"getting an A in Math 325" where 1 means you got an A and 0 means you
+didn't. We might use an explanatory variable X of "height" to see if
+taller students are more likely to get an A in Math 325 than shorter
+students. (They aren't, if you were wondering.)]{.tooltipimagetext}
+:::
+
+## Binomial Y \| Quantitative X {.tabset .tabset-pills}
 
 ### Graphics
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
 Add your own notes about graphics to use for this type of data here.
-
-
-
-
-
-
 
 <a href="GraphicalSummaries.html#scatterplots">
-  <img class="myhover" src="./Images/scatterplotbinomY.png" alt="Scatterplot with Binomial Y" title="Scatterplot with Binomial Y">
+<img src="./Images/scatterplotbinomY.png" title="Scatterplot with Binomial Y" alt="Scatterplot with Binomial Y" class="myhover"/>
 </a>
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
 ### Tests
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
-Add your own notes about appropriate inferential procedures for this type of data here.
-
-
-
-
-
+Add your own notes about appropriate inferential procedures for this
+type of data here.
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
-#
-<div style="clear:both;"></div>
+# 
 
-----
+::: {style="clear:both;"}
+:::
 
-<div style="float:left;width:125px;" align=center class="tooltipimage">
-<img src="./Images/BinomYMultX.png" width=100px;>
-  <span class="tooltipimagetext">Y is a single categorical (qualitative) variable of interest where 1 (success) or 0 (failure) are the only possible values for Y. This would be like "getting an A in Math 325" where 1 means you got an A and 0 means you didn't. We might use an explanatory variable X1 of "height" and a second explanatory variable X2 of "gender" to try to predict whether or not a student will get an A in Math 325.</span>
-</div>
+------------------------------------------------------------------------
 
-## Binomial Y | Multiple X {.tabset .tabset-pills}
+::: {.tooltipimage style="float:left;width:125px;" align="center"}
+<img src="./Images/BinomYMultX.png" width="100px;"/> [Y is a single
+categorical (qualitative) variable of interest where 1 (success) or 0
+(failure) are the only possible values for Y. This would be like
+"getting an A in Math 325" where 1 means you got an A and 0 means you
+didn't. We might use an explanatory variable X1 of "height" and a second
+explanatory variable X2 of "gender" to try to predict whether or not a
+student will get an A in Math 325.]{.tooltipimagetext}
+:::
+
+## Binomial Y \| Multiple X {.tabset .tabset-pills}
 
 ### Graphics
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
 Add your own notes about graphics to use for this type of data here.
-
-
-
-
-
-
 
 <a href="GraphicalSummaries.html#scatterplots">
-  <img class="myhover" src="./Images/scatterplotbinomYmult.png" alt="Scatterplot with Binomial Y" title="Scatterplot with Binomial Y, including coloring and shading">
+<img src="./Images/scatterplotbinomYmult.png" title="Scatterplot with Binomial Y, including coloring and shading" alt="Scatterplot with Binomial Y" class="myhover"/>
 </a>
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
 ### Tests
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
-Add your own notes about appropriate inferential procedures for this type of data here.
-
-
-
-
-
+Add your own notes about appropriate inferential procedures for this
+type of data here.
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
-#
-<div style="clear:both;"></div>
+# 
 
-----
+::: {style="clear:both;"}
+:::
 
-<div style="float:left;width:125px;" align=center class="tooltipimage">
-<img src="./Images/QualYQualX.png" width=59px;>
-  <span class="tooltipimagetext">Y is a single categorical variable of interest, like gender. X is another categorical variable of interest, like "hair color". This type of data would help us understand if men or women are more likely to have certain hair colors than the other gender.</span>
-</div>
+------------------------------------------------------------------------
 
-## Categorical Y | Categorical X {.tabset .tabset-pills}
+::: {.tooltipimage style="float:left;width:125px;" align="center"}
+<img src="./Images/QualYQualX.png" width="59px;"/> [Y is a single
+categorical variable of interest, like gender. X is another categorical
+variable of interest, like "hair color". This type of data would help us
+understand if men or women are more likely to have certain hair colors
+than the other gender.]{.tooltipimagetext}
+:::
+
+## Categorical Y \| Categorical X {.tabset .tabset-pills}
 
 ### Graphics
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
 Add your own notes about graphics to use for this type of data here.
-
-
-
-
-
 
 <a href="GraphicalSummaries.html#bar-charts">
-  <img class="myhover" src="./Images/barplot.png" alt="Bar Chart" title="Bar Chart">
+<img src="./Images/barplot.png" title="Bar Chart" alt="Bar Chart" class="myhover"/>
 </a>
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
 ### Tests
-<div style="padding-left:125px;color:lightgray;">
+
+::: {style="padding-left:125px;color:lightgray;"}
 <!-- Add your customizations in the area below: -->
 
-Add your own notes about appropriate inferential procedures for this type of data here.
-
-
-
-
-
+Add your own notes about appropriate inferential procedures for this
+type of data here.
 
 <!--- End of Add content area.  ------------------>
-</div>
+:::
 
-#
-<div style="clear:both;"></div>
+# 
 
-----
+::: {style="clear:both;"}
+:::
 
-<footer></footer>
+------------------------------------------------------------------------
 
+<footer>
+
+</footer>
