@@ -6,19 +6,17 @@ output:
     code_folding: hide
 ---
 
-## Background
-
-Delete these words and write your own background here motivating why you are studying the weather in the following two cities that you pick.  
 
 ```{r, warning=FALSE, message=FALSE, ev}
 library(GSODR) #run: install.packages("GSODR") 
+library(pander)
 # to get the GSODR package. You'll need this package to pull in your weather data.
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
 ```
 
 ```{r, eval=FALSE}
 #Run this in your console to see the Country Names you can pick from:
-View(isd_history)
+# View(isd_history)
 #Search "United States" in the search bar of the top-right corner of the data Viewer that pops up.
 #Or search for any other country you are interested in.
 #Goal, select the STNID (station ID) for two different weather stations. 
@@ -33,16 +31,135 @@ rexburg <- get_GSOD(years = 2023, station = "726818-94194")
 
 #Then run a similar code to get your station information for your weather stations.
 #(If you want to use rexburg, then just use one of the following codes)
-#cityName1 <- get_GSOD(years = 2023, station = "yourchoice1")
-#cityName2 <- get_GSOD(years = 2023, station = "yourchoice2")
+finland <- get_GSOD(years = 2023, station = "028750-99999")
+# ireland <- get_GSOD(years = 2023, station = "039800-99999")
 
 #Finally, join your two datasets together into one dataset:
-weather <- rbind(cityName1, cityName2)
+# weather2 <- rbind(finland, ireland)
+weather <- rbind(finland, rexburg)
+# View(weather)
+
+#x=o is alphabetical, its the baseline.
+
+# Model with Null and Alt, should be 3 of them.
+# - Ho: B1 = 0 HA B1 != 0
+# Ho: B2 = 0 HA B2 != 0
+# Ho: B3 = 0 HA B3 != 0
+# B1 = Slope of the baseline
+# B2 = Change in the Y-intercept
+# B3 = Change in the slope
+# Explain what the betas are in context
+
 ```
 
 <!-- Now write up an analysis that studies something like how well the MIN temperature predicts the MAX temperature of the day in the two cities you selected. Of course, you are welcome to do any multiple regression you want with the data, but the recommendation would be to just run a "two-lines" model with the x=MIN, y=MAX, and color of the dots the NAME column. -->
 
-## Analysis
 
-Delete these words and put in your multiple regression analysis here.
+## Background
+Oulu is a town in Finland and we all know Rexburg. I want to see if there's a relationship between the minimum temperature and the max temperature for the day and if an increase in the minimum could increase the maximum. 
+
+
+
+### Hypothesis
+
+
+$$
+H_O: \text{There is no interaction between minimum temperature and the two cities (Oulu or Rexburg) } \beta = 0
+$$
+
+$$
+H_A: \text{There is an interaction between minimum temperature and the two cities (Oulu or Rexburg) } \beta \neq 0
+$$
+$$
+a = 0.05
+$$
+$$
+\beta_0 = \text{(Intercept) represents the estimated maximum temperature (MAX) when the minimum temperature (MIN) is zero for Oulu (since Oulu is the baseline city)}
+$$
+$$
+\beta_1 = \text{(Slope for MIN) represents the change in MAX for every unit change in MIN for Oulu.}
+$$
+$$
+\beta_2 = \text{(Change in Intercept for Rexburg) represents how much higher the intercept (i.e., the starting value of MAX when MIN is zero) is for Rexburg compared to Oulu.}
+$$
+
+$$
+\beta_3 = \text{(Change in Slope for Rexburg) represents how much steeper the slope is for Rexburg compared to Oulu.}
+$$
+
+
+
+### Analysis
+```{r}
+weather.lm <- lm(MAX~MIN + NAME + NAME:MIN, data = weather)
+pander(summary(weather.lm))
+```
+
+
+
+### Plot with 2 line
+```{r}
+
+
+b <- coef(weather.lm)
+plot(MAX ~ MIN, data = weather, col = c("skyblue", "orange")[as.factor(weather$NAME)], pch = 21, bg = "gray83", main = "Multiple Linear Regression Model using weather data")
+
+#Baseline for Oulu
+curve(b[1] + b[2] * x, col = "skyblue", lwd = 2, add = TRUE)  # Baseline line
+
+#CHanged line for Rexburg
+curve((b[1] + b[3]) + (b[2] + b[4]) * x, col = "orange", lwd = 2, add = TRUE)  # Changed line
+legend("topleft", legend = c("Baseline (Oulu, Finland==1)", "Changed-line (Rexburg, ID==2)"), bty = "n", lty = 1, col = c("skyblue", "orange"))
+
+
+
+```
+
+
+
+### Prediction
+
+```{r}
+
+
+prediction_oulu <- predict(weather.lm, newdata = data.frame(MIN = 30, NAME = "OULU"))
+
+prediction_rexburg <- predict(weather.lm, newdata = data.frame(MIN = 30, NAME = "REXBURG-MADISON COUNTY APT"))
+cat("Predicted MAX for Oulu (MIN = 30):", prediction_oulu, "\n")
+cat("Predicted MAX for Rexburg (MIN = 30):", prediction_rexburg, "\n")
+
+
+
+
+```
+We see from the prediction that when the minimum temperature for both cities is 30, the predicted maximum temperature for Oulu is 38.5 and for Rexburg it's 50.5. This shows that for the same minimum temperature, the maximum temperature in Rexburg tends to be higher than in Oulu which we do see in the slope.
+
+
+### Give the slope and the y intercept for both lines
+```{r}
+#Baseline Oulu
+intercept_oulu <- b[1]
+slope_oulu <- b[2]
+
+#Changed-line for Rexburg
+intercept_rexburg <- b[1] + b[3]
+slope_rexburg <- b[2] + b[4]
+
+cat("Oulu: Intercept =", intercept_oulu, ", Slope =", slope_oulu, "\n")
+cat("Rexburg: Intercept =", intercept_rexburg, ", Slope =", slope_rexburg, "\n")
+
+```
+For Oulu we see that as for every 1 degree increase in minimum temperature they have appoximately the same rise in maximum temperature. And even though Rexburg is closely similar it is more of an increase and will equate to more to higher temperatures like in the summer.
+
+
+### Conclusion
+𝛽3 suggests that the relationship between the minimum and maximum differs between Oulu and Rexburg. In particular, Rexburg has a higher intercept and a steeper slope than Oulu, meaning that for the same minimum temperature, the maximum temperature in Rexburg tends to be higher. Both cities show a positive relationship between minimum and maximum, but the rate of change is faster in Rexburg.The model explains approximately 86.19% of the variance in maximum temperature, indicating a good fit. Future studies could include additional variables such as humidity, wind speed, or season to improve the model's accuracy.
+We can reject the null hypothesis though further test could be done.
+
+<!-- Extra credit for: -->
+<!-- ### Full Model -->
+<!-- ### Equal Intercepts -->
+<!-- ### Equal Slopes -->
+
+
 

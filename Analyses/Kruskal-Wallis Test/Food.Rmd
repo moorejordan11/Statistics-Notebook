@@ -15,7 +15,8 @@ library(car)
 library(DT)
 library(pander)
 library(readr)
-food <- read_csv("food.csv") #food.csv is in the Data folder...
+library(forcats)
+food <- read_csv("../../Data/food.csv") #food.csv is in the Data folder...
 ```
 
 
@@ -418,16 +419,197 @@ Note this dataset and description come from: © 2020 Kaggle Inc for further deta
 
 If you want to give your critiquers some ideas about what you have questions on and would like help with, place those details here.-->
 
+<!-- GPA -->
 
+<!-- Eating Changes -->
 
+<!-- healthy_feel – how likely are you to agree with the following statement: “I feel very healthy!” ? -->
+<!--       1 to 10 where 1 is strongly agree and 10 is strongly disagree - scale -->
+
+<!-- marital_status -->
+<!-- 1 -Single  -->
+<!-- 2 - In a relationship  -->
+<!-- 3 - Cohabiting  -->
+<!-- 4 - Married  -->
+<!-- 5 - Divorced  -->
+<!-- 6 - Widowed -->
+
+<!-- mothers_education  -->
+<!-- 1 - less than high school  -->
+<!-- 2 - high school degree  -->
+<!-- 3 - some college degree  -->
+<!-- 4 - college degree  -->
+<!-- 5 - graduate degree       -->
+
+<!-- sports - sports – do you do any sporting activity? -->
+<!-- 1 - Yes  -->
+<!-- 2 - No  -->
+<!-- 99 – no answer -->
+
+<!-- income -->
+<!-- 1 - less than $15,000  -->
+<!-- 2 - $15,001 to $30,000  -->
+<!-- 3 - $30,001 to $50,000  -->
+<!-- 4 - $50,001 to $70,000  -->
+<!-- 5 - $70,001 to $100,000  -->
+<!-- 6 - higher than $100,000 -->
+
+<!-- diet_current_coded -->
+<!-- 1 - healthy/balanced/moderated/ -->
+<!-- 2 - unhealthy/cheap/too much/random/ -->
+<!-- 3 - the same thing over and over -->
+<!-- 4 - unclear -->
 
 <!--End your comments to your critiquers before this line.-->
-
+<!--Begin writing your Analysis after this point.-->
 ----
 
-<!--Begin writing your Analysis after this point.-->
+```{r}
+# Let's take a look at the data
+# View(food)
+```
 
 ## Background
+
+### Introduction-Context
+In today's day it's becoming harder to afford to eat healthier due to cost. I want to examine if there's a relationship between a higher income and a better diet due to healthier foods becoming more expensive and those of a lesser quality being cheaper and bought more by those with a lower income.
+Here's the categories for Income as if you display them on a boxplot the chart become skewed and hard to read:
+1 - less than `$`15,000  
+2 - `$`15,001 to `$`30,000 
+3 - `$`30,001 to `$`50,000 
+4 - `$`50,001 to `$`70,000 
+5 - `$`70,001 to `$`100,000
+6 - higher than `$`100,000
+
+
+### Hypothesis for ANOVA
+
+$$
+H_O: \text{There is no difference in income between the different diet types.}
+$$
+
+$$
+H_A: \text{There is a difference in income between the different}
+$$
+$$
+a = 0.05
+$$
+
+
+### Numerical/Graphing Summaries
+
+
+```{r}
+
+#Boxplot and numerical summaries
+
+testdata <- food %>% 
+  mutate(diet_current_coded = as.factor(diet_current_coded)) %>% 
+  filter(!is.na(income))
+
+testdata <- testdata %>%
+  mutate(diet_current_coded = fct_recode(as.factor(diet_current_coded),
+                                          "Healthy/Balanced/Moderated" = "1",
+                                          "Unhealthy/Cheap/Too much/Random" = "2",
+                                          "The same thing over and over" = "3",
+                                          "Unclear" = "4"))
+# testdata <- testdata %>%
+#   mutate(income = fct_recode(as.factor(income),
+#                               "Less than $15,000" = "1",
+#                               "$15,001 to $30,000" = "2",
+#                               "$30,001 to $50,000" = "3",
+#                               "$50,001 to $70,000" = "4",
+#                               "$70,001 to $100,000" = "5",
+#                               "Higher than $100,000" = "6"))
+
+ggplot(testdata, aes(x = diet_current_coded, y = income, color = diet_current_coded)) +
+  geom_boxplot() +
+  labs(title = "Boxplot of Income by Diet Current Coded",
+       x = "Diet Current Coded",
+       y = "Income") +
+  theme_bw() +
+  theme(
+    panel.background = element_rect(fill = "lightgrey", color = NA),
+    plot.background = element_rect(fill = "lightgrey", color = NA),
+    plot.title = element_text(color = "royalblue", face = "bold", size = 16),
+    axis.title.x = element_text(color = "royalblue"),
+    axis.title.y = element_text(color = "royalblue"),
+    legend.background = element_rect(fill = "lightgrey"),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  ) +
+    coord_flip()
+
+
+
+pander(favstats(income ~ diet_current_coded, data = testdata))
+
+```
+
+You can see from the box plot that they do all max out near each other, but the medians are different. The numerical summaries show that the mean income for those with a healthy/balanced/moderated diet is higher than those with an unhealthy/cheap/too much/random diet. The same thing over and over diet is the lowest in income. 
+
+### One-Way Anova
+
+
+```{r}
+# One-Way ANOVA for Sports and diet current coded
+
+
+aov_sports_diet <- aov(income ~ diet_current_coded, data = testdata)
+pander(summary(aov_sports_diet))
+
+
+```
+We have a p-valye of .1471 and due to our alpha of 0.05 we fail to reject the null hypothesis. According to the ANOVA test there is no difference in income between the different diet types.
+
+
+### qqPlot/Requirements
+
+```{r}
+# qqplot to test normality
+
+plot(aov_sports_diet, which = 1:2)
+
+
+```
+
+We see that the requirements are met by the one-way ANOVA test for the hypothesis. But we're gonna complete a Kruskal-Wallis test to just confirm and compare our assumptions.
+
+
+### Hypothesis for KW-Test
+
+$$
+H_O: \text{There is no difference in income between the different diet types groups.}
+$$
+
+$$
+H_A: \text{At least one diet grouping has a different income.}
+$$
+
+$$
+a = 0.05
+$$
+
+### Kruskal-Wallis Test
+
+```{r}
+#Kruskal-Wallis Test
+
+pander(kruskal.test(income ~ diet_current_coded, data = testdata))
+
+```
+
+The Kruskal-Wallis confirms our rejection of the Null Hypothesis and shows that there is no difference in income between the different diet types.
+
+
+### Requirements for KW-Test
+We can see from prior that the requirements were already met and does not require further testing to check for normality.
+
+
+### Conclusion
+We can conclude from our one-way ANOVA and the Kruskal-Wallis test that we fail to reject the null hypothesis. There is no difference in income between the different diet types. We can see from our p-value that it is greater than 0.05 but it is close and could help us examine the information deeper if we wanted to know more.
+
+
+
 
 
 

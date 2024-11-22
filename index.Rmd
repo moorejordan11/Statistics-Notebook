@@ -55,6 +55,11 @@ Or to a page on the internet: [R
 Colors](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf)
 
 ```{r}
+# USE PANDER
+```
+
+
+```{r}
 mean(airquality$Temp)
 ```
 
@@ -122,38 +127,267 @@ mean(airquality$Temp)
 ```
 
 ```{r}
-# Tests for Normality
-
-# [t test](tTests.html)
-
-# One Sample T-Test:Standard Dev is unknown and we have one group.
+# What does the formula mean?
+# Copy code
+# lm(formula = mpg ~ qsec + as.factor(am), data = mtcars)
+# This formula means we are predicting miles per gallon (mpg) based on:
 # 
-# Paired T-Test: Two groups are paired and we are comparing the means of the two groups. Length-width*3 created a new column.   pretest-posttest, same group with links like marriage.
+# qsec: How long it takes the car to complete a quarter-mile (continuous variable).
+# as.factor(am): The type of transmission:
+# am = 0: Automatic transmission.
+# am = 1: Manual transmission.
+# What do the results tell us?
+# Residuals:
+# These show how much the actual mpg differs from the predicted mpg for each car. Residuals range from 
+# −
+# 6.3447
+# −6.3447 to 
+# 6.9194
+# 6.9194, meaning:
 # 
-# Independent sample T-test: Two groups are independent and we are comparing the means of the two groups. Different classes, no direct relationship between the two. Variables don't depend on each other.
-
-# [Wilcoxon](WilcoxonTest.html)
-
-# Wilxocin Signed Rank Test: Nonparametric version of one sample t-test. If the data is not normally distributed, we use this test. ANd Paired T-test is used when the data is normally distributed. If it's a low sample it'd be a nonparametric test.
+# Some cars have mpg values over- or under-predicted by up to ~6 mpg.
+# Coefficients:
+# The key part! This table explains how each variable affects mpg.
 # 
-# Mann-Whitney U Test:Nonparametric version of independent sample t-test. If the data is not normally distributed, we use this test.
-
-# [ANOVA](ANOVA.html)
-
-# One-Way ANOVA: Three or more groups extension of the independent samples t test.
-
+# Intercept (
+# −
+# 18.8893
+# −18.8893):
+# 
+# If 
+# 𝑞
+# 𝑠
+# 𝑒
+# 𝑐
+# =
+# 0
+# qsec=0 and 
+# 𝑎
+# 𝑚
+# =
+# 0
+# am=0 (automatic transmission), the predicted mpg would start at 
+# −
+# 18.8893
+# −18.8893.
+# This value alone isn’t meaningful because 
+# 𝑞
+# 𝑠
+# 𝑒
+# 𝑐
+# =
+# 0
+# qsec=0 isn’t realistic for a car.
+# qsec (
+# 1.9819
+# 1.9819):
+# 
+# For each 1-second increase in quarter-mile time (
+# 𝑞
+# 𝑠
+# 𝑒
+# 𝑐
+# qsec), mpg increases by 1.98.
+# Example: If a car takes 16 seconds for a quarter mile (
+# 𝑞
+# 𝑠
+# 𝑒
+# 𝑐
+# =
+# 16
+# qsec=16), its mpg is predicted to be much higher than a car that takes 15 seconds.
+# as.factor(am)1 (
+# 8.8763
+# 8.8763):
+# 
+# If the car has a manual transmission (
+# 𝑎
+# 𝑚
+# =
+# 1
+# am=1), mpg is 8.88 higher compared to an automatic car (
+# 𝑎
+# 𝑚
+# =
+# 0
+# am=0).
+# Example: For two cars with the same 
+# 𝑞
+# 𝑠
+# 𝑒
+# 𝑐
+# qsec, the manual one is predicted to get ~9 more mpg.
+# Significance of Variables:
+# The stars (***) next to the coefficients mean the variable has a very strong relationship with mpg:
+# 
+# 𝑞
+# 𝑠
+# 𝑒
+# 𝑐
+# qsec: The relationship with mpg is very significant (p-value: 
+# 6.27
+# ×
+# 1
+# 0
+# −
+# 6
+# 6.27×10 
+# −6
+#  ).
+# 𝑎
+# 𝑚
+# am: The difference in mpg between automatic and manual is also very significant (p-value: 
+# 1.46
+# ×
+# 1
+# 0
+# −
+# 7
+# 1.46×10 
+# −7
+#  ).
+# Model Quality:
+# Residual standard error: 3.487.
+# 
+# On average, the predicted mpg is off by about 3.49 mpg.
+# R-squared (0.6868):
+# 
+# The model explains about 69% of the variation in mpg.
+# F-statistic and p-value:
+# 
+# The overall model is very significant (p-value: 
+# 4.882
+# ×
+# 1
+# 0
+# −
+# 8
+# 4.882×10 
+# −8
+#  ).
+# Putting It Together:
+# A car’s mpg is influenced by how fast it runs a quarter-mile (
+# 𝑞
+# 𝑠
+# 𝑒
+# 𝑐
+# qsec) and whether it has a manual or automatic transmission (
+# 𝑎
+# 𝑚
+# am).
+# Manual cars tend to get better mpg (by about 9 mpg), and slower quarter-mile times lead to higher mpg.
+# Would you like further clarification or examples?
 ```
 
 ```{r}
+Logistic Regression
 
+# The probability of a success 
+# 𝑌𝑖= 1 given the information contained in the explanatory variable(s).
+
+# In the challenger simple logistic regression example, the estimated value of  β1 is  b1=−0.232
+# How is this value interpreted?
+# 
+# A one unit increase in outside temperature results in a 0.793 change in the odds of an o-ring failure. We need to take -0.232 and use exp to change to odds. exp(-0.232) = 0.793
+
+# exp(-0.232)
+
+# Probability refers to the likelihood of an event occurring, ranging from 0 to 1.
+# Odds are the ratio of the probability of success to the probability of failure
+# The interpretation hinges on "odds" because logistic regression models log odds, not probabilities. The fact that 𝛽1 is negative means the odds decrease (i.e., are multiplied by a number less than 1) for a 1-unit increase in 𝑋
+# infert.glm <- glm( (spontaneous > 0) ~ age, data=infert, family=binomial)
+# 
+# summary(infert.glm)
+# plot( (spontaneous > 0) ~ age, data=infert)
+# b <- coef(infert.glm)
+# 
+# curve(exp(b[1]+b[2]*x)/(1+exp(b[1]+b[2]*x)), add=TRUE)
+# table(infert$age)
+# 
+# pchisq(334.01, 246, lower.tail=FALSE)
+# galt.glm <- glm(sex=="M" ~ height, data=Galton, family=binomial)
+# summary(galt.glm) %>% pander()
+# 
+# plot( sex=="M" ~ height, data=Galton, 
+#       xlab="Outside Temperature at Time of Launch (Fahrenheit)",
+#       col = c("green","red")[as.factor(sex=="M")],
+#       ylab='Probability of At least One O-ring Failing', pch=16, 
+#       main="NASA Shuttle Launch Data from 1981 to 1985", xlim=c(30,85))
+# b <- coef(galt.glm)
+# curve(exp(b[1]+b[2]*x)/(1+exp(b[1]+b[2]*x)), add=TRUE)
+# predict(galt.glm, newdata = data.frame(height = 65), type = "response")
+# 
+# hoslem.test(galt.glm$y, galt.glm$fitted, g=10) %>% pander()
+#g = 10 means how many groups you're splitting the data into to test it.
+```
+
+
+### Tests for Normality
+
+
+One Sample T-Test Standard Dev is unknown and we have one group.
+
+Paired T-Test: Two groups are paired and we are comparing the means of the two groups. Length-width*3 created a new column.   pretest-posttest, same group with links like marriage.
+
+Independent sample T-test: Two groups are independent and we are comparing the means of the two groups. Different classes, no direct relationship between the two. Variables don't depend on each other.
+
+[Wilcoxon](WilcoxonTest.html)
+
+Wilxocin Signed Rank Test: Nonparametric version of one sample t-test. If the data is not normally distributed, we use this test. ANd Paired T-test is used when the data is normally distributed. If it's a low sample it'd be a nonparametric test.
+
+Mann-Whitney U Test:Nonparametric version of independent sample t-test. If the data is not normally distributed, we use this test.
+
+[ANOVA](ANOVA.html)
+```{r}
+# One-Way ANOVA: Three or more groups extension of the independent samples t test.
+# NUll Hypothesis: The means of the groups are equal. ANull is at least one is different.
+# Requirements are that the smallest has to be no less than 4 times that largest. Like 5 and 20.
+```
+
+```{r}
 # Skills Week 6
-
-# Factor is a categorical variable like temperature or month even if numbers.
-
+# Factor is a categorical variable like temperature or month even if numbers.If it's spelled in English you don't need to use as.factor. Just if it's numerical but a number.
 # Levels of the factor is the different categories of the factor. Jan, Feb, Mar, etc.
 
 ```
 
+[Simple Linear Regression](SimpleLinearRegression.html)
+```{r}
+#____________________________________
+# 5 Basic assumptions explained:
+# 1. Linear Relation:
+# This assumption says that the relationship between the independent variable (X) and the dependent variable (Y) is straight-line (linear). In other words, changes in X should result in proportional changes in Y, forming a straight line when plotted on a graph.
+# Example: If you're predicting someone's weight based on their height, the assumption is that the relationship between height and weight is consistent (a straight line), not curved.
+
+# 2. Normal Errors:
+# This means that the difference between the predicted values (from the regression line) and the actual observed values (the data points) should follow a normal distribution (a bell-shaped curve). In simple terms, the errors (or mistakes) in the predictions should be random and not biased.
+# Example: If your regression model predicts a person's weight, the errors in the predictions (how far off the prediction is from the actual weight) should follow a normal distribution.
+
+# 3. Constant Variance (Homoscedasticity):
+# The error term (the difference between the observed and predicted values) should have a constant spread, no matter the value of X. In other words, as you move along the X-axis (the independent variable), the size of the errors should stay the same.
+# Example: If you're predicting weight based on height, the spread of the errors (how much the predictions deviate from the actual weight) should be roughly the same for short people and tall people.
+
+# 4. Fixed X:
+# This assumption means that the values of X (the independent variable) are not random. They are measured accurately and are not subject to any error. This ensures that the relationship between X and Y is clear.
+# Example: If you are measuring height to predict weight, you assume that the height values you use are accurate and not subject to any measurement mistakes or variability.
+
+# 5. Independent Errors:
+# This assumption states that the errors (or differences between predicted and actual values) should not be related to each other. In other words, the error for one data point should not affect the error for another data point.
+# Example: If you're predicting weight for different people, the mistake you make when predicting one person's weight should not be connected to the mistake you make for another person's weight. Each error should be independent.
+
+```
+
+
+
+[One Sample t Test](tTests.html)
+
+ 
+
+[Signed-Rank Wilcoxon Test](WilcoxonTests.html)
+
+[Histogram, Boxplot, or Dotplot](GraphicalSummaries.html)
+
+[Mean, median, five-number summary, standard deviation](NumericalSummaries.html)
 
 <!-- End your notes before here. ------------------------------------- -->
 

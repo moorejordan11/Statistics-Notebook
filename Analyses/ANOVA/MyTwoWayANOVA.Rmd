@@ -17,7 +17,7 @@ library(tidyverse)
 # Save the data as a .csv file in the Data folder of the Statistics-Notebook.
 
 # Read in the data
-someNameYouWant <- read_csv("../../Data/whatYouNamedYourDataGoesHere.csv") 
+df <- read_csv("customer_history.csv")
 ```
 
 <!-- Instructions:
@@ -29,8 +29,92 @@ Studying reaction time is recommended because the data is quickly collected.
 While you should use the warpbreaks example analyses as your guide on how to properly complete this analysis, you should also be creative in your final delivery of this analysis. If you copy the format and approach of the example analyses, be sure to give credit in your document to these example analyses. You could write something like, "This work is modeled after the [warpbreaks](https://byuistats.github.io/Statistics-Notebook/Analyses/ANOVA/Examples/warpbreaksTwoWayANOVA.html) analysis." Whatever you do, DO NOT use any of the written statements from the example analyses in your analysis unless you quote them directly and give credit. Using someone else's writing as your own without giving credit to the original author is plagiarism and is an Honor Code Violation. So do your own work. Plus, the more you try to write things in your own words, the more you will learn. Also, note that there aren't really any "rules" about exactly how your document should be organized. So be creative and organize your file in a way that makes sense to you, but still has all important elements.
 
 -->
+## Introduction and Background
+Airlines often provide loyalty programs that offer various levels of membership benefits Star, Aurora, and Nova. Each level may represent different tiers of engagement or spending by members. We will be completing an ANOVA test to see if there is any correlation between the loyalty card level and the salary of the customers. We will look at the numerical data and take a look at the graphical information to give an idea of what the data looks like. We will then perform an ANOVA test to see if there is a significant difference in salaries based on loyalty card.
+
+
+### Hypothesis
+
+$$
+H_O: \text{There is no significant difference in salaries based on loyalty card level, gender, or their interaction.}
+$$
+
+$$
+H_A: \text{There is a significant difference in salaries based on loyalty card level, gender, or their interaction.}
+$$
+
+$$
+a = 0.05
+$$
 
 
 
+### Data Summary
+
+```{r}
+#Checking the assumptions of ANOVA
+
+testing <- df %>% 
+  select(`Loyalty Card`, Salary, Gender)
+
+testing <- testing %>% 
+  rename(Loyalty_Card = `Loyalty Card`)
+
+testing <- testing %>% 
+  filter(!is.na(Loyalty_Card), !is.na(Salary), !is.na(Gender))
+
+testing$Marital_Status <- as.factor(testing$Loyalty_Card)
+testing$Gender <- as.factor(testing$Gender)
+
+salary_summary <- testing %>%
+  group_by(Loyalty_Card, Gender) %>%
+  summarise(
+    Mean = mean(Salary, na.rm = TRUE),
+    Median = median(Salary, na.rm = TRUE),
+    SD = sd(Salary, na.rm = TRUE),
+    Count = n(),
+    .groups='drop')
+
+pander(salary_summary, caption = "Summary of Salary by Loyalty and Gender")
+```
+
+```{r}
+
+ggplot(testing, aes(x = reorder(Loyalty_Card, Salary), y = Salary, fill = Loyalty_Card)) +
+  geom_violin() +  # Remove stat = "identity"
+  labs(title = "Higher the Card the Richer you are?",
+       x = "Loyalty Card Level",
+       y = "Salary") +
+  theme_bw() +
+  scale_y_continuous(labels = scales::dollar_format()) +
+  coord_flip()
+
+```
+
+The data in the graph shows that each level is pretty similar in salary distribution. This suggests that loyalty card level alone may not have a significant impact on salaries. However, we need to conduct a statistical test to confirm this observation.
+
+### Two-way ANOVA Test
+
+```{r}
+#Filtering how the NA columns from the data set.
+
+results <- aov(Salary ~ Loyalty_Card + Gender + Loyalty_Card:Gender, data = testing)
+pander(results)
+
+```
+The ANOVA analysis reveals that loyalty card levels (Star, Aurora, Nova) do not significantly affect salaries as indicated by a p-value of 0.2633. Similarly, gender does not appear to have a significant impact on salaries with a p-value of 0.9391. The interaction between loyalty card level and gender has a p-value of 0.0894 suggesting a possible influence, but it is still not below our 0.05 significant level. The analysis summarizes that neither loyalty card level or gender or the interaction between the two, has a significant effect on salaries in the flight data set.
+
+### Checking Requirements
+
+```{r}
+
+plot(results, which = 1:2)
+
+```
 
 
+When we looked at the Q-Q plot of the salaries, we noticed that the data is right skewed. This means that there are a lot of higher salaries compared to lower ones, which can pull the average salary up. Because of this skewness the data doesn't perfectly fit the normal distribution that we look for with the ANOVA. This could affect our results, making them less reliable. Our first plot shows an equal separation of the medians, which is a good sign for the ANOVA. However, the right skewness of the data could still be a problem.
+
+### Conclusion
+
+In summary, none of the factors—loyalty card level, gender, or their interaction—showed significant effects on salaries in this analysis. However, it's important to consider the right skewness observed in the data as it could influence the validity of these conclusions. Further analysis or different statistical methods might be needed to explore these relationships more accurately. Airlines could use these insights to make informed decisions about their loyalty programs and compensation practices potentially leading to more equitable rewards for their members.

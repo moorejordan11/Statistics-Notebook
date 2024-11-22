@@ -18,3 +18,15 @@ in your Console to see available datasets in R that you could use for this Analy
 library(mosaic)
 library(ResourceSelection) 
 ```
+
+```{r}
+heart <- read.csv("../../data/heart.csv")
+diabetes <- read.csv("../../data/diabetes.csv")
+View(heart)
+View(diabetes)
+```
+totChol
+prevelantStroke
+
+
+

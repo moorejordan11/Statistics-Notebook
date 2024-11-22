@@ -507,81 +507,111 @@ this page!</p>
 <p>Or to a page on the internet: <a
 href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf">R
 Colors</a></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">mean</span>(airquality<span class="sc">$</span>Temp)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># USE PANDER</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">mean</span>(airquality<span class="sc">$</span>Temp)</span></code></pre></div>
 <pre><code>## [1] 77.88235</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># &lt;!-- womenhousing4$chosen &lt;- ifelse(womenhousing4$Name %in% women_housing3$Name, &quot;Favorite&quot;,ifelse(womenhousing4$AvgFloorPlanCostMonthly &lt; 300 &amp; womenhousing4$CrowFlyMetersToMC &lt; 618, &quot;Desired&quot;,&quot;Normal&quot;)) --&gt;\</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co"># &lt;!-- country_copy &lt;- countries %&gt;%  --&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># &lt;!--   pivot_longer(cols = matches(&quot;^\\d{4}$&quot;), names_to = &quot;year&quot;, values_to = &quot;height&quot;) --&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co"># &lt;!-- outputTable &lt;- rbind(Residents=favstats(Rent$Residents)) --&gt;</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co"># &lt;!-- pander(outputTable[c(&quot;min&quot;, &quot;Q1&quot;, &quot;median&quot;, &quot;mean&quot;, &quot;Q3&quot;, &quot;max&quot;, &quot;n&quot;)],  --&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co"># &lt;!--        caption=&quot;Resident Amount Summary&quot;) --&gt;</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Degrees of Freedom (DF) is a concept that appears in many statistical calculations, and it refers to the number of values in a calculation that are free to vary. In simpler terms, degrees of freedom tell us how much &quot;flexibility&quot; we have in a statistical calculation before we lock down all of our values.</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># &lt;!-- womenhousing4$chosen &lt;- ifelse(womenhousing4$Name %in% women_housing3$Name, &quot;Favorite&quot;,ifelse(womenhousing4$AvgFloorPlanCostMonthly &lt; 300 &amp; womenhousing4$CrowFlyMetersToMC &lt; 618, &quot;Desired&quot;,&quot;Normal&quot;)) --&gt;\</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co"># Here’s an analogy: Imagine you have three friends, and the average of their ages is 20. If I tell you the ages of two of the friends, you can automatically calculate the age of the third one, right? That’s because two values are free to vary, but the third one is locked by the fact that their average must be 20. In this case, there are 2 degrees of freedom.</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># A Z-score tells you how many standard deviations a specific data point (</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co"># 𝑥</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co"># x) is from the mean (</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># 𝜇</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co"># μ) of a distribution. It can be positive or negative:</span></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co"># A positive Z-score means the data point is above the mean.</span></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co"># A negative Z-score means the data point is below the mean.</span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co"># A Z-score of 0 means the data point is exactly at the mean.</span></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co"># t_results &lt;- t.test(uptake ~ Type, data=CO2.chilled.250)</span></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co"># t_results</span></span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co"># t = 6.2075, df = 3.8818, p-value = 0.003782</span></span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co"># alternative hypothesis: true difference in means between group Quebec and group Mississippi is not equal to 0</span></span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co"># 95 percent confidence interval:</span></span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#  10.05213 26.68120</span></span>
-<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co"># library(car)</span></span>
-<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co"># The values are safe for the hypothesis because they do not go outside the lines.</span></span>
-<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co"># qqPlot(uptake ~ Type, data = CO2.chilled.250)</span></span>
-<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co"># If the sample sizes are less than 30, you need to check whether the underlying populations are normally distributed. This can be visually assessed using a Q-Q plot (quantile-quantile plot).</span></span>
-<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co"># A Q-Q plot compares the quantiles of the sample data to the quantiles of a normal distribution. If the points on the Q-Q plot fall approximately along a straight line, this suggests that the data are normally distributed.</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># ANOVA Test</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co"># Why do we use ANOVA?</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co"># Imagine you have three or more groups (for example, different teaching methods) and you want to know if they all have the same effect on students’ test scores. ANOVA helps you check if the average test scores for each group are different.</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co"># If you just compare two groups, you could use a t-test. But when there are three or more groups, an ANOVA is more efficient because it can compare all the groups at once.</span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co"># How does it work?</span></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co"># ANOVA splits the variation in the data into two parts:</span></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co"># Within-group variation: How much the values differ within each group.</span></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co"># Between-group variation: How much the group averages differ from each other.</span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co"># The test compares these two variations to see if the differences between groups are bigger than what would be expected by random chance.</span></span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co"># What do the results tell us?</span></span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co"># p-value: If the p-value is small (usually less than 0.05), it means at least one group is different from the others.</span></span>
-<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co"># If the p-value is large, it means that any differences you see in the group means could be due to random chance, and the groups are not significantly different from each other.</span></span>
-<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co"># What ANOVA doesn’t tell you:</span></span>
-<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co"># ANOVA tells you that there’s a difference, but it doesn’t tell you which groups are different. To find that out, you need to run further tests (called post-hoc tests).</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Tests for Normality</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co"># [t test](tTests.html)</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co"># One Sample T-Test:Standard Dev is unknown and we have one group.</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co"># Paired T-Test: Two groups are paired and we are comparing the means of the two groups. Length-width*3 created a new column.   pretest-posttest, same group with links like marriage.</span></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co"># Independent sample T-test: Two groups are independent and we are comparing the means of the two groups. Different classes, no direct relationship between the two. Variables don&#39;t depend on each other.</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co"># [Wilcoxon](WilcoxonTest.html)</span></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co"># Wilxocin Signed Rank Test: Nonparametric version of one sample t-test. If the data is not normally distributed, we use this test. ANd Paired T-test is used when the data is normally distributed. If it&#39;s a low sample it&#39;d be a nonparametric test.</span></span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co"># Mann-Whitney U Test:Nonparametric version of independent sample t-test. If the data is not normally distributed, we use this test.</span></span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co"># [ANOVA](ANOVA.html)</span></span>
-<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co"># One-Way ANOVA: Three or more groups extension of the independent samples t test.</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># Skills Week 6</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co"># Factor is a categorical variable like temperature or month even if numbers.</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co"># Levels of the factor is the different categories of the factor. Jan, Feb, Mar, etc.</span></span></code></pre></div>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co"># &lt;!-- country_copy &lt;- countries %&gt;%  --&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co"># &lt;!--   pivot_longer(cols = matches(&quot;^\\d{4}$&quot;), names_to = &quot;year&quot;, values_to = &quot;height&quot;) --&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co"># &lt;!-- outputTable &lt;- rbind(Residents=favstats(Rent$Residents)) --&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co"># &lt;!-- pander(outputTable[c(&quot;min&quot;, &quot;Q1&quot;, &quot;median&quot;, &quot;mean&quot;, &quot;Q3&quot;, &quot;max&quot;, &quot;n&quot;)],  --&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co"># &lt;!--        caption=&quot;Resident Amount Summary&quot;) --&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Degrees of Freedom (DF) is a concept that appears in many statistical calculations, and it refers to the number of values in a calculation that are free to vary. In simpler terms, degrees of freedom tell us how much &quot;flexibility&quot; we have in a statistical calculation before we lock down all of our values.</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co"># Here’s an analogy: Imagine you have three friends, and the average of their ages is 20. If I tell you the ages of two of the friends, you can automatically calculate the age of the third one, right? That’s because two values are free to vary, but the third one is locked by the fact that their average must be 20. In this case, there are 2 degrees of freedom.</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># A Z-score tells you how many standard deviations a specific data point (</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co"># 𝑥</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co"># x) is from the mean (</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co"># 𝜇</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co"># μ) of a distribution. It can be positive or negative:</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co"># A positive Z-score means the data point is above the mean.</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co"># A negative Z-score means the data point is below the mean.</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co"># A Z-score of 0 means the data point is exactly at the mean.</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co"># t_results &lt;- t.test(uptake ~ Type, data=CO2.chilled.250)</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co"># t_results</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co"># t = 6.2075, df = 3.8818, p-value = 0.003782</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co"># alternative hypothesis: true difference in means between group Quebec and group Mississippi is not equal to 0</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co"># 95 percent confidence interval:</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#  10.05213 26.68120</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co"># library(car)</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co"># The values are safe for the hypothesis because they do not go outside the lines.</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co"># qqPlot(uptake ~ Type, data = CO2.chilled.250)</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co"># If the sample sizes are less than 30, you need to check whether the underlying populations are normally distributed. This can be visually assessed using a Q-Q plot (quantile-quantile plot).</span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co"># A Q-Q plot compares the quantiles of the sample data to the quantiles of a normal distribution. If the points on the Q-Q plot fall approximately along a straight line, this suggests that the data are normally distributed.</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># ANOVA Test</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co"># Why do we use ANOVA?</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co"># Imagine you have three or more groups (for example, different teaching methods) and you want to know if they all have the same effect on students’ test scores. ANOVA helps you check if the average test scores for each group are different.</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co"># If you just compare two groups, you could use a t-test. But when there are three or more groups, an ANOVA is more efficient because it can compare all the groups at once.</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co"># How does it work?</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co"># ANOVA splits the variation in the data into two parts:</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co"># Within-group variation: How much the values differ within each group.</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co"># Between-group variation: How much the group averages differ from each other.</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co"># The test compares these two variations to see if the differences between groups are bigger than what would be expected by random chance.</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co"># What do the results tell us?</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co"># p-value: If the p-value is small (usually less than 0.05), it means at least one group is different from the others.</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co"># If the p-value is large, it means that any differences you see in the group means could be due to random chance, and the groups are not significantly different from each other.</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co"># What ANOVA doesn’t tell you:</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co"># ANOVA tells you that there’s a difference, but it doesn’t tell you which groups are different. To find that out, you need to run further tests (called post-hoc tests).</span></span></code></pre></div>
+</div>
+<div id="tests-for-normality" class="section level3">
+<h3>Tests for Normality</h3>
+<p>One Sample T-Test Standard Dev is unknown and we have one group.</p>
+<p>Paired T-Test: Two groups are paired and we are comparing the means
+of the two groups. Length-width*3 created a new column.
+pretest-posttest, same group with links like marriage.</p>
+<p>Independent sample T-test: Two groups are independent and we are
+comparing the means of the two groups. Different classes, no direct
+relationship between the two. Variables don’t depend on each other.</p>
+<p><a href="WilcoxonTest.html">Wilcoxon</a></p>
+<p>Wilxocin Signed Rank Test: Nonparametric version of one sample
+t-test. If the data is not normally distributed, we use this test. ANd
+Paired T-test is used when the data is normally distributed. If it’s a
+low sample it’d be a nonparametric test.</p>
+<p>Mann-Whitney U Test:Nonparametric version of independent sample
+t-test. If the data is not normally distributed, we use this test.</p>
+<p><a href="ANOVA.html">ANOVA</a></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># One-Way ANOVA: Three or more groups extension of the independent samples t test.</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co"># NUll Hypothesis: The means of the groups are equal. ANull is at least one is different.</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co"># Requirements are that the smallest has to be no less than 4 times that largest. Like 5 and 20.</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Skills Week 6</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co"># Factor is a categorical variable like temperature or month even if numbers.If it&#39;s spelled in English you don&#39;t need to use as.factor. Just if it&#39;s numerical but a number.</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co"># Levels of the factor is the different categories of the factor. Jan, Feb, Mar, etc.</span></span></code></pre></div>
+<p><a href="SimpleLinearRegression.html">Simple Linear
+Regression</a></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#____________________________________</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co"># 5 Basic assumptions explained:</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co"># 1. Linear Relation:</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co"># This assumption says that the relationship between the independent variable (X) and the dependent variable (Y) is straight-line (linear). In other words, changes in X should result in proportional changes in Y, forming a straight line when plotted on a graph.</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co"># Example: If you&#39;re predicting someone&#39;s weight based on their height, the assumption is that the relationship between height and weight is consistent (a straight line), not curved.</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co"># 2. Normal Errors:</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co"># This means that the difference between the predicted values (from the regression line) and the actual observed values (the data points) should follow a normal distribution (a bell-shaped curve). In simple terms, the errors (or mistakes) in the predictions should be random and not biased.</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co"># Example: If your regression model predicts a person&#39;s weight, the errors in the predictions (how far off the prediction is from the actual weight) should follow a normal distribution.</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co"># 3. Constant Variance (Homoscedasticity):</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co"># The error term (the difference between the observed and predicted values) should have a constant spread, no matter the value of X. In other words, as you move along the X-axis (the independent variable), the size of the errors should stay the same.</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co"># Example: If you&#39;re predicting weight based on height, the spread of the errors (how much the predictions deviate from the actual weight) should be roughly the same for short people and tall people.</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co"># 4. Fixed X:</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co"># This assumption means that the values of X (the independent variable) are not random. They are measured accurately and are not subject to any error. This ensures that the relationship between X and Y is clear.</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co"># Example: If you are measuring height to predict weight, you assume that the height values you use are accurate and not subject to any measurement mistakes or variability.</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a><span class="co"># 5. Independent Errors:</span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="co"># This assumption states that the errors (or differences between predicted and actual values) should not be related to each other. In other words, the error for one data point should not affect the error for another data point.</span></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="co"># Example: If you&#39;re predicting weight for different people, the mistake you make when predicting one person&#39;s weight should not be connected to the mistake you make for another person&#39;s weight. Each error should be independent.</span></span></code></pre></div>
+<p><a href="tTests.html">One Sample t Test</a></p>
+<p><a href="WilcoxonTests.html">Signed-Rank Wilcoxon Test</a></p>
+<p><a href="GraphicalSummaries.html">Histogram, Boxplot, or
+Dotplot</a></p>
+<p><a href="NumericalSummaries.html">Mean, median, five-number summary,
+standard deviation</a></p>
 <!-- End your notes before here. ------------------------------------- -->
 </div>
 </div>

@@ -13,6 +13,7 @@ library(DT)
 library(pander)
 library(car)
 library(tidyverse)
+library(lattice)
 
 # To get the "late" dataset into your R Console, 
 # you need to go to your file menu of R-Studio and select
@@ -30,6 +31,16 @@ Late <- pivot_longer(late, #Start with wide data set late
                names_prefix = "Week", #Remove prefix of Week from Week1, Week2, ...
                names_transform = list(Week= ~as.numeric(.x)), #Make Week a numeric column of data
                values_to = "NumberofLateChildren") #Name of data column in long data
+Late <- Late %>% 
+  mutate(
+    Period = case_when(
+      Week %in% c(1,2,3,4) ~ "Before Fine",
+      Week %in% c(17,18,19,20) ~ "Fine Removed",
+      TRUE ~ "Fine Applied"
+    )
+  )
+Late$Treatment <- Late$Treatment %>% as.factor()
+Late$Period <- Late$Period %>% as.factor()
 
 ```
 
@@ -90,7 +101,7 @@ pander(late, split.tables = Inf)
 The `Late` Day Care Center data is shown here in the "long data format", a more useable format for analysis.
 
 ```{r}
-pander(Late)
+# pander(Late)
 ```
 
 
@@ -107,12 +118,56 @@ pander(Late)
 ### Hypotheses
 
 <!-- State the hypotheses for this analysis in this section. -->
+Hypotheses about Treatment where $\mu$ represents the mean number of late children picked up from Day Care Centers during the week.
 
+Null Hypotheses = Mean of Control Group = Mean of Fine Group.
+Alt Hypotheses = Average number of late children for one group.
+
+#_____________________________________________________________
+
+Hypotheses about Period where $\mu$ represents the mean number of late children picked up from Day Care Centers during the week.
+
+Null Hypotheses = Before Fine = Fine Applied = Removed Fine
+Alt Hypotheses = Average number of late children differ for one group.
+
+Hypotheses about the interaction of Treatment and Period.
+
+#_____________________________________________________________
+
+H_0: \text{The effect of the Treatment on the average Period picked up does not depend on the Period of the study.
+
+H_a: \text{The effect of the [fill in the blank] on the average [fill in the blank] picked up changes during at least one [fill in the blank] of the study.
 
 
 ### Two-way ANOVA 
 
 <!-- Show the two-way ANOVA summary output in this section. -->
+```{r}
+#For children the two factors would be: Period, treatment.
+#For the two-way ANOVA, we will use the aov() function.
+#The formula will be NumberofLateChildren ~ Period * Treatment
+
+result1 <- aov(NumberofLateChildren ~ Treatment + Period + Treatment:Period, data = Late)
+summary(result1) %>% pander()
+
+Late <- Late %>% 
+  mutate(NumberofLateChildren = NumberofLateChildren %>% as.numeric())
+
+xyplot(NumberofLateChildren ~ Treatment, data = Late, type = c("p", "a"))
+xyplot(NumberofLateChildren ~ Period, data = Late, type = c("p", "a"))
+xyplot(NumberofLateChildren ~ Treatment, data = Late, type = c("p", "a"), groups = Period)
+
+summary_table <- Late %>%
+  group_by(Treatment, Period) %>%
+  summarise(mean_response = mean(NumberofLateChildren, na.rm = TRUE), .groups = "drop")
+
+pander(summary_table)
+
+sum <- Late %>%
+  group_by(Treatment, Period) %>%
+  summarise(mean_response = sum(NumberofLateChildren, na.rm = TRUE), .groups = "drop")
+
+```
 
 
 

@@ -10,6 +10,8 @@ output:
 # Load your libraries
 library(car)
 library(tidyverse)
+library(ggplot2)
+library(pander)
 
 # Load your data after saving a csv file in your Data folder.
 # You can use either 
@@ -19,6 +21,9 @@ library(tidyverse)
 #   someName <- read_csv("../Data/YourDataFileName.csv")
 
 # Don't forget to run "Session -> Set Working Directory -> To Source file location"
+# Attach the CSV file to the project
+# Read the CSV file
+df <- read.csv("../../Data/PitchSpeed.csv", header=TRUE)
 
 ```
 
@@ -42,5 +47,90 @@ Come up with a simple linear regression of your own creation.
 
 
 ## Background
+```{r}
+
+# View(df)
+pander(head(df))
+
+```
+
+The data set created has observations of pitches over a game and the relative speed as the pitches continue. The pitch chosen was a changeup which was the most used pitch by the same pitcher as he threw a complete game; which means he started and finished the game as the pitcher. As using each pitch type would skew the data and certain pitches are slower than others. The data was collected from an actual baseball game in June of 2024.
 
 
+### Hypothesis for ANOVA
+
+$$
+H_O: \text{There is no relationship between pitch order (or time during the game) and pitch speed. Any observed change in pitch speed is due to random variation.}
+$$
+
+$$
+H_A: \text{There is a relationship between pitch order and pitch speed, indicating that pitch speed decreases systematically over the course of the game.}
+$$
+$$
+a = 0.05
+$$
+
+
+
+### Correlation and Scatterplot
+
+```{r}
+
+ggplot(df, aes(x = PitchNo, y = PitchSpeed)) +
+  geom_point(color= "royalblue", size = 2, shape = 16) +
+  labs(x = "Pitch Number", y = "Pitch Speed (mph)", title = "Pitch Speed Over Game Progression for a Changeup") +
+  geom_smooth(method = "lm", se = FALSE, color = "red", size =.5) +
+  theme_bw() +
+    theme(
+    panel.background = element_rect(fill = "lightgrey", color = NA),
+    plot.background = element_rect(fill = "lightgrey", color = NA),
+    plot.title = element_text(color = "royalblue", face = "bold", size = 16),
+    axis.title.x = element_text(color = "royalblue"),
+    axis.title.y = element_text(color = "royalblue"),
+    legend.background = element_rect(fill = "lightgrey")
+  )
+
+pander(cor(df$PitchNo, df$PitchSpeed))
+
+
+```
+We see a slight decrease of pitch speed as the pitch numbers increase throughout the game.
+
+### Linear regression model
+
+```{r}
+
+dflm <- lm(PitchSpeed ~ PitchNo, data = df)
+pander(summary(dflm))
+
+
+
+```
+
+```{r}
+pander(predict(dflm, data.frame(PitchNo = 50)))
+
+
+
+```
+The linear regression model indicates a slight, statistically insignificant decrease in pitch speed over time, with each additional pitch reducing speed by only 0.019 mph on average. The model's low R-squared value (0.017) suggests that pitch number explains very little of the variation in pitch speed, indicating that other factors may influence speed more than the pitch sequence. Based on the model, the predicted pitch speed for the first pitch is approximately 81.3 mph, close to the intercept of 82.3 mph.
+
+
+### Requirements
+
+```{r}
+plot(dflm)
+
+
+
+```
+
+
+
+The residuals are fairly scattered around zero, although there is a slight curvature, suggesting a mild deviation from linearity. There are a few outliers at the bottom left, which could indicate some unusual observations in the data but there is some deviation at the lower and upper tails, indicating that the residuals may not be perfectly normal.
+
+In summary, these plots suggest that while the model roughly meets the assumptions, there are slight issues with normality. These issues may not severely impact the analysis but could indicate that the model does not fully capture some patterns in the data.
+
+### Conclusions/Future Studies
+
+In conclusion we see that there is a minor correlation between pitch speed and pitch number as it progresses but is not statistically significant. Future studies could look at other factors that may influence pitch speed, such as the pitcher's fatigue, the batter's skill, or the game situation. By considering these additional variables, a more comprehensive model could be developed to better predict pitch speed and understand the factors that influence it.
